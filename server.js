@@ -3,7 +3,7 @@ let bodyParser = require("body-parser");
 let albumsRouter = require("./routes/albums");
 let indexRouter = require("./routes/index");
 
-let PORT = 3000;
+let PORT = process.env.PORT || 3000;
 
 let app = express();
 
