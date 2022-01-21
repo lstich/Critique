@@ -1,1 +1,16 @@
 node_modules
+critique/node_modules/
+critique/.expo/
+critique/dist/
+critique/npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+critique/web-build/
+
+# macOS
+.DS_Store
+~          s
