@@ -22,7 +22,7 @@ export default class AlbumListCard extends Component {
   }
 
   componentDidMount() {
-    console.log(this.state.album.title);
+    //console.log(this.state.album.title);
   }
 
   render() {
@@ -40,7 +40,6 @@ export default class AlbumListCard extends Component {
         <View style={{ flex: 0.7 }}>
           <Text
             style={{
-              numberOfLines: 1,
               flex: 0.3,
               paddingLeft: 5,
               fontSize: 20,

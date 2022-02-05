@@ -1,13 +1,5 @@
 import { React, Component } from "react";
-import {
-  View,
-  Button,
-  Text,
-  Image,
-  StyleSheet,
-  ScrollView,
-  Pressable,
-} from "react-native";
+import { Button, StyleSheet, ScrollView, Pressable } from "react-native";
 import axios from "axios";
 
 import AlbumListCard from "./../components/album-list-card";
@@ -41,7 +33,6 @@ export default class Albums extends Component {
       axios
         .get(`https://critique-heroku.herokuapp.com/albums/getalbums`)
         .then((res) => {
-          console.log(res.data.albums[0].title);
           if (res) {
             this.setState({
               albums: res.data.albums,
