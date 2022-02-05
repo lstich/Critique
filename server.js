@@ -2,6 +2,7 @@ let express = require("express");
 let bodyParser = require("body-parser");
 let albumsRouter = require("./routes/albums");
 let indexRouter = require("./routes/index");
+let usersRouter = require("./routes/users");
 
 let PORT = process.env.PORT || 3000;
 
@@ -11,6 +12,7 @@ app.use(bodyParser.json());
 
 app.use("/", indexRouter);
 app.use("/albums", albumsRouter);
+app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
