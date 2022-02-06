@@ -14,7 +14,7 @@ router.post("/login", async function (req, res, next) {
 
   let existingUser = await User.findOne({ username: username });
   if (existingUser) {
-    if (password == user.password) {
+    if (password == existingUser.password) {
       res.status(400).send("Password match!");
     } else {
       res.status(400).send("Password incorrect!");
