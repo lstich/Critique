@@ -24,11 +24,11 @@ router.post("/login", function (req, res, next) {
   );
   res.status(400).send("User not found!");
 });
-router.post("/register", function (req, res, next) {
+router.post("/register", async function (req, res, next) {
   let { username, password } = req.body;
-  
-  let existingUser= await Users.findOne({username: username});
-  if(existingUser) return res.status(400).send("User already exists!");
+
+  let existingUser = await Users.findOne({ username: username });
+  if (existingUser) return res.status(400).send("User already exists!");
 
   //create and add new user
 
