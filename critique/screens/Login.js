@@ -80,7 +80,7 @@ export default class Login extends Component {
         })
         .then(async function (res) {
           if (res) {
-            console.log(res);
+            console.log(res.data);
           }
         })
         .catch((err) => {
@@ -104,7 +104,7 @@ export default class Login extends Component {
         })
         .then(async function (res) {
           if (res) {
-            console.log(res);
+            console.log(res.data);
           }
         })
         .catch((err) => {
