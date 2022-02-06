@@ -66,13 +66,49 @@ export default class Login extends Component {
     this.setState({ password: value });
   };
 
-  handleSubmit = () => {
+  handleLogin = async () => {
+    try {
+      let user = {
+        username: this.state.email,
+        password: this.state.password,
+      };
+      console.log(this.state.email + " " + this.state.password);
+      axios
+        .post(`https://critique-heroku.herokuapp.com/users/login`, {
+          username: user.username,
+          password: user.password,
+        })
+        .then(async function (res) {
+          if (res) {
+            console.log(res);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  handleRegister = async () => {
+    let user = {
+      username: this.state.email,
+      password: this.state.password,
+    };
+    console.log("hi");
     try {
       axios
-        .get(`https://critique-heroku.herokuapp.com/albums/getalbums`)
-        .then((res) => {
+        .post(`https://critique-heroku.herokuapp.com/users/register`, {
+          username: user.username,
+          password: user.password,
+        })
+        .then(async function (res) {
           if (res) {
+            console.log(res);
           }
+        })
+        .catch((err) => {
+          console.log(err);
         });
     } catch (err) {
       console.log(err);
@@ -126,6 +162,7 @@ export default class Login extends Component {
             title="Login"
             onPress={(press) => {
               press.preventDefault();
+              this.handleLogin();
               console.log(this.state.email + " " + this.state.password);
             }}
           />
@@ -133,6 +170,7 @@ export default class Login extends Component {
             title="Register"
             onPress={(press) => {
               press.preventDefault();
+              this.handleRegister();
               console.log(this.state.email + " " + this.state.password);
             }}
           />

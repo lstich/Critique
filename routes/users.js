@@ -15,7 +15,7 @@ router.post("/login", async function (req, res, next) {
   let existingUser = await User.findOne({ username: username });
   if (existingUser) {
     if (password == existingUser.password) {
-      res.status(400).send("Password match!");
+      res.send("Logged in");
     } else {
       res.status(400).send("Password incorrect!");
     }
@@ -37,7 +37,7 @@ router.post("/register", async function (req, res, next) {
   });
   newUser.save().then(
     (user) => {
-      res.status(400).send("New User Added!");
+      res.send("New User added!");
     },
     (err) => {
       res.status(400).send(err);
