@@ -4,6 +4,10 @@ var router = express.Router();
 let mongoose = require("./../db/mongoose");
 let User = require("../schema/User.model.js");
 
+router.get("/", function (req, res, next) {
+  res.status(400).send("yoooooo");
+});
+
 /* GET home page. */
 router.post("/login", function (req, res, next) {
   let { username, password } = req.body;
@@ -51,7 +55,5 @@ router.post("/register", function (req, res, next) {
       res.status(400).send(err);
     };
 });
-
-router.post("/addAlbum", function (req, res, next) {});
 
 module.exports = router;
