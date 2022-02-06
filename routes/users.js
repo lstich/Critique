@@ -38,7 +38,7 @@ router.post("/register", async function (req, res, next) {
   });
   newUser.save().then(
     (user) => {
-      res.status(400).send("New User Added! ", user.username);
+      res.status(400).send("New User Added!");
     },
     (err) => {
       res.status(400).send(err);
