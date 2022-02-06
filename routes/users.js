@@ -26,16 +26,9 @@ router.post("/login", function (req, res, next) {
 });
 router.post("/register", function (req, res, next) {
   let { username, password } = req.body;
-  User.findOne({ username: username }).then(
-    (user) => {
-      res.status(400).send("User already exists!");
-      return;
-      //res.send({ albums });
-    },
-    (err) => {
-      res.status(400).send(err);
-    }
-  );
+  
+  let existingUser= await Users.findOne({username: username});
+  if(existingUser) return res.status(400).send("User already exists!");
 
   //create and add new user
 
@@ -45,7 +38,7 @@ router.post("/register", function (req, res, next) {
   });
   newUser.save().then(
     (user) => {
-      console.log("New User Added! ", user.username);
+      res.status(400).send("New User Added! ", user.username);
     },
     (err) => {
       res.status(400).send(err);
