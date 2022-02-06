@@ -9,20 +9,19 @@ router.get("/", function (req, res, next) {
 });
 
 /* GET home page. */
-router.post("/login", function (req, res, next) {
+router.post("/login", async function (req, res, next) {
   let { username, password } = req.body;
-  User.findOne({ username: username }).then(
-    (user) => {
-      if (password == user.password) {
-        res.status(400).send("Password match!");
-        //res.send({ albums });
-      }
-    },
-    (err) => {
-      res.status(400).send(err);
+
+  let existingUser = await User.findOne({ username: username });
+  if (existingUser) {
+    if (password == user.password) {
+      res.status(400).send("Password match!");
+    } else {
+      res.status(400).send("Password incorrect!");
     }
-  );
-  res.status(400).send("User not found!");
+  } else {
+    return res.status(400).send("User not found!");
+  }
 });
 router.post("/register", async function (req, res, next) {
   let { username, password } = req.body;
