@@ -27,6 +27,16 @@ router.post("/userRateAlbum", async function (req, res, next) {
       };
       let num = album.numRatings + 1;
 
+      let newSet = [...new Set(album.userRatings)];
+
+      console.log("Set " + newSet);
+
+      newSet.delete(null);
+
+      console.log("Set 2" + newSet);
+
+      console.log("Set " + newSet);
+
       console.log("num " + album.userRatings);
 
       console.log(album.userRatings);
