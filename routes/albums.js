@@ -32,13 +32,14 @@ router.post("/userRateAlbum", async function (req, res, next) {
       console.log(album.userRatings);
 
       album.userRatings.push(newRating);
+      album.numRatings++;
 
       console.log(album.userRatings);
 
-      let response = await Album.updateOne(
+      /*let response = await Album.updateOne(
         { albumId: albumId },
         { numRatings: num, userRatings: album.userRatings.push(newRating) }
-      );
+      );*/
 
       res.send("Things went well: " + response.acknowledged);
     } else {
