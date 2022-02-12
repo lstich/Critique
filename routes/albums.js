@@ -26,7 +26,15 @@ router.post("/userRateAlbum", async function (req, res, next) {
         rating: rating,
       };
       let num = album.numRatings + 1;
+
       console.log("num " + album.userRatings);
+
+      console.log(album.userRatings);
+
+      album.userRatings.push(newRating);
+
+      console.log(album.userRatings);
+
       let response = await Album.updateOne(
         { albumId: albumId },
         { numRatings: num, userRatings: album.userRatings.push(newRating) }
