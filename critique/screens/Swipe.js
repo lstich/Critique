@@ -49,7 +49,7 @@ export default class Swipe extends Component {
         .post(`https://critique-heroku.herokuapp.com/albums/userRateAlbum`, {
           username: this.state.username,
           albumId: albumId,
-          rating: rating,
+          userRating: rating,
         })
         .then(async function (res) {
           if (res) {
