@@ -31,11 +31,11 @@ router.post("/userRateAlbum", async function (req, res, next) {
         album.userRatings.shift;
       }
 
-      let newMap = new Map(
-        album.userRatings.map((obj) => [obj.userId, obj.rating])
-      );
+      //let newMap = new Map(
+      // album.userRatings.map((obj) => [obj.userId, obj.rating])
+      //);
 
-      console.log("Map " + newMap);
+      //console.log("Map " + newMap);
 
       console.log("num " + album.userRatings);
 
