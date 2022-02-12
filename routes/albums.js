@@ -52,13 +52,11 @@ router.post("/userRateAlbum", async function (req, res, next) {
 
       console.log("map to arr: " + c);
 
-      //newMap.set(username, rating);
+      let arr = Array.from(myMap, function (item) {
+        return { userId: item[0], rating: item[1] };
+      });
 
-      //console.log("num " + album.userRatings);
-
-      //console.log(album.userRatings);
-
-      album.userRatings = [...newMap];
+      album.userRatings = arr;
 
       album.numRatings = album.userRatings.length;
 
