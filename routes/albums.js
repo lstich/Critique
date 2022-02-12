@@ -50,7 +50,7 @@ router.post("/userRateAlbum", async function (req, res, next) {
 
       console.log("Map " + newMap.size + " " + newMap.get("user1"));
 
-      console.log("map to arr: " + c);
+      console.log("map to arr: ");
 
       let arr = Array.from(myMap, function (item) {
         return { userId: item[0], rating: item[1] };
