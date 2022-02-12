@@ -30,9 +30,7 @@ router.post("/userRateAlbum", async function (req, res, next) {
       console.log("please be nll: " + album.userRatings[0] == null);
       console.log("please be nll: " + album.userRatings[0] === "null");
       console.log("please be nll: " + album.userRatings[0] == "null");
-      if (album.userRatings[0] === null) {
-        album.userRatings.shift;
-      }
+
       album.userRatings.filter((element) => {
         return element !== null;
       });
@@ -40,7 +38,9 @@ router.post("/userRateAlbum", async function (req, res, next) {
       if (album.userRatings.includes(null) == true) {
         console.log("array2 contains null value");
       }
-      console.log(album.userRatings.indexOf(null));
+      if (album.userRatings.indexOf(null) == 0) {
+        album.userRatings.shift();
+      }
 
       //console.log(album.userRatings);
       //let newMap = new Map(
