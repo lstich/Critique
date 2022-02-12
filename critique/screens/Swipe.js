@@ -23,10 +23,10 @@ export default class Swipe extends Component {
   }
 
   componentDidMount() {
-    this.doApiCall();
+    this.fetchAlbums();
   }
 
-  doApiCall() {
+  fetchAlbums() {
     try {
       axios
         .get(`https://critique-heroku.herokuapp.com/albums/getalbums`)
@@ -43,13 +43,24 @@ export default class Swipe extends Component {
     }
   }
 
-  swipeGreen() {
-    console.log("hahah");
+  swipeApi(albumId, rating) {
+    try {
+      axios
+        .post(`https://critique-heroku.herokuapp.com/albums/userRateAlbum`, {
+          username: this.state.username,
+          albumId: albumId,
+          rating: rating,
+        })
+        .then(async function (res) {
+          if (res) {
+            console.log(res);
+          }
+        });
+      //console.log(Object.values(this.state.albums));
+    } catch (err) {
+      console.log(err);
+    }
   }
-
-  swipeRed() {}
-
-  swipeBlue() {}
 
   render() {
     return (
@@ -68,14 +79,12 @@ export default class Swipe extends Component {
           onSwipedLeft={(cardIndex) => {
             console.log(cardIndex);
             //this.state.albums[cardIndex].albumId
-            this.swipeRed;
+            this.swipeApi(this.state.albums[cardIndex].albumId, 0);
           }}
           onSwipedRight={(cardIndex) => {
-            this.swipeGreen;
+            this.swipeApi(this.state.albums[cardIndex].albumId, 1);
           }}
-          onSwipedTop={(cardIndex) => {
-            this.swipeBlue;
-          }}
+          onSwipedTop={(cardIndex) => {}}
           renderCard={(card) => {
             return (
               <View

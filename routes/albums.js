@@ -42,7 +42,18 @@ router.post("/userRateAlbum", async function (req, res, next) {
         return { userId: item[0], rating: item[1] };
       });
 
-      //set userRatings and update numRatings
+      //set album rating
+      let ratingScore = 0;
+
+      arr.forEach(function (item) {
+        if (item != null) {
+          ratingScore += item.rating;
+        }
+      });
+      let rating = Math.round((ratingScore * 100) / album.numRatings);
+      //set userRatings, update numRatings and rating
+
+      album.rating = rating;
       album.userRatings = arr;
       album.numRatings = album.userRatings.length;
 
