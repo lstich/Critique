@@ -16,7 +16,7 @@ router.get("/getAlbums", function (req, res, next) {
   );
 });
 
-router.get("/getNewAlbums", function (req, res, next) {
+router.post("/getNewAlbums", function (req, res, next) {
   let { username } = req.body;
   Album.find({ "userRating.userId": { $ne: username } }).then(
     (albums) => {
