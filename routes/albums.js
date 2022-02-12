@@ -49,12 +49,14 @@ router.post("/userRateAlbum", async function (req, res, next) {
 
       console.log("Map " + newMap.size + " " + newMap.keys());
 
+      newMap.set(username, rating);
+
       //console.log("num " + album.userRatings);
 
       //console.log(album.userRatings);
 
-      album.userRatings.push(newRating);
-      album.numRatings++;
+      album.userRatings = newMap;
+      album.numRatings.size;
 
       //console.log(album.userRatings);
 
