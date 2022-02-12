@@ -27,8 +27,11 @@ router.post("/userRateAlbum", async function (req, res, next) {
       };
       let num = album.numRatings + 1;
 
-      console.log("please be nll: " + album.userRatings[0]);
-      if (album.userRatings[0] == null) {
+      console.log("please be nll: " + album.userRatings[0] === null);
+      console.log("please be nll: " + album.userRatings[0] == null);
+      console.log("please be nll: " + album.userRatings[0] === "null");
+      console.log("please be nll: " + album.userRatings[0] == "null");
+      if (album.userRatings[0] === null) {
         album.userRatings.shift;
       }
 
