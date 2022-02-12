@@ -47,7 +47,7 @@ router.post("/userRateAlbum", async function (req, res, next) {
         album.userRatings.map((obj) => [obj.userId, obj.rating])
       );
 
-      console.log("Map " + newMap);
+      console.log("Map " + newMap.keys);
 
       //console.log("num " + album.userRatings);
 
