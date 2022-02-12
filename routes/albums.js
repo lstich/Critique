@@ -41,6 +41,7 @@ router.post("/userRateAlbum", async function (req, res, next) {
       if (album.userRatings.indexOf(null) == 0) {
         album.userRatings.shift();
       }
+      album.userRatings.push(newRating);
 
       //console.log(album.userRatings);
       let newMap = new Map(
@@ -49,7 +50,7 @@ router.post("/userRateAlbum", async function (req, res, next) {
 
       console.log("Map " + newMap.size + " " + newMap.get("user1"));
 
-      console.log("map to arr: " + [...newMap]);
+      console.log("map to arr: " + c);
 
       //newMap.set(username, rating);
 
@@ -57,9 +58,7 @@ router.post("/userRateAlbum", async function (req, res, next) {
 
       //console.log(album.userRatings);
 
-      album.userRatings.push(newRating);
-
-      album.userRatings;
+      album.userRatings = [...newMap];
 
       album.numRatings = album.userRatings.length;
 
