@@ -13,10 +13,6 @@ import AlbumListCard from "./../components/album-list-card";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
-  },
-  screen: {
-    flex: 1,
   },
   spinner: {
     flex: 1,
@@ -58,7 +54,7 @@ export default class Albums extends Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.screen}>
+      <SafeAreaView style={styles.container}>
         {this.state.spinner ? (
           <ActivityIndicator
             style={styles.spinner}
@@ -67,7 +63,10 @@ export default class Albums extends Component {
             color="#ffffff"
           />
         ) : (
-          <ScrollView style={styles.screen} ref={(ref) => (this.scroll = ref)}>
+          <ScrollView
+            style={styles.container}
+            ref={(ref) => (this.scroll = ref)}
+          >
             {this.state.albums.map((album) => (
               <View key={album.albumId} style={{ paddingTop: 10 }}>
                 <AlbumListCard

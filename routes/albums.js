@@ -16,6 +16,18 @@ router.get("/getAlbums", function (req, res, next) {
   );
 });
 
+router.get("/getNewAlbums", function (req, res, next) {
+  let { username } = req.body;
+  Album.find({ "userRating.userId": { $ne: username } }).then(
+    (albums) => {
+      res.send({ albums });
+    },
+    (err) => {
+      res.status(400).send(err);
+    }
+  );
+});
+
 router.post("/userRateAlbum", async function (req, res, next) {
   let { username, albumId, userRating } = req.body;
   try {
