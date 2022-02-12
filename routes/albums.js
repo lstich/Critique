@@ -42,7 +42,7 @@ router.post("/userRateAlbum", async function (req, res, next) {
       }
       console.log(album.userRatings.indexOf(null));
 
-      console.log(album.userRatings);
+      //console.log(album.userRatings);
       //let newMap = new Map(
       // album.userRatings.map((obj) => [obj.userId, obj.rating])
       //);
