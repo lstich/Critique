@@ -40,6 +40,7 @@ router.post("/userRateAlbum", async function (req, res, next) {
       if (album.userRatings.includes(null) == true) {
         console.log("array2 contains null value");
       }
+      console.log(album.userRatings.indexOf(null));
 
       console.log(album.userRatings);
       //let newMap = new Map(
