@@ -18,23 +18,27 @@ router.get("/getAlbums", function (req, res, next) {
 
 router.post("/userRateAlbum", async function (req, res, next) {
   let { username, albumId, rating } = req.body;
+  try {
+    let album = await Album.findOne({ albumId: albumId });
+    if (album) {
+      let newRating = {
+        userId: username,
+        rating: rating,
+      };
+      let num = album.numRatings++;
+      //let newarray = album.userRatings.push(newRating);
 
-  let album = await Album.findOne({ albumId: albumId });
-  if (album) {
-    let newRating = {
-      userId: username,
-      rating: rating,
-    };
-    let newarray = album.userRatings.push(newRating);
+      let response = await Album.updateOne(
+        { albumId: albumId },
+        { numRatings: num }
+      );
 
-    let response = await Album.updateOne(
-      { albumId: albumId },
-      { userRatings: newarray }
-    );
-
-    res.send("Things went well: " + response.acknowledged);
-  } else {
-    res.send("album doesnt exist");
+      res.send("Things went well: " + response.acknowledged);
+    } else {
+      res.send("album doesnt exist");
+    }
+  } catch (err) {
+    console.log(err);
   }
 
   //create and add new user
