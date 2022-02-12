@@ -50,10 +50,10 @@ router.post("/userRateAlbum", async function (req, res, next) {
           ratingScore += item.rating;
         }
       });
-      let rating = Math.round((ratingScore * 100) / album.numRatings);
+      let newRating = Math.round((ratingScore * 100) / album.numRatings);
       //set userRatings, update numRatings and rating
 
-      album.rating = rating;
+      album.rating = newRating;
       album.userRatings = arr;
       album.numRatings = album.userRatings.length;
 
