@@ -27,6 +27,10 @@ router.post("/userRateAlbum", async function (req, res, next) {
       };
       let num = album.numRatings + 1;
 
+      if (album.userRatings[0] == null) {
+        album.userRatings.shift;
+      }
+
       let newMap = new Map(
         album.userRatings.map((obj) => [obj.userId, obj.rating])
       );
