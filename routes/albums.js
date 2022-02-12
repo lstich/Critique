@@ -36,12 +36,25 @@ router.post("/userRateAlbum", async function (req, res, next) {
 
       console.log(album.userRatings);
 
+      album.save().then(
+        (doc) => {
+          console.log("Sent! ", doc);
+          //res.send({ albums });
+        },
+        (err) => {
+          res.status(400).send(err);
+        }
+      ),
+        (err) => {
+          res.status(400).send(err);
+        };
+
       /*let response = await Album.updateOne(
         { albumId: albumId },
         { numRatings: num, userRatings: album.userRatings.push(newRating) }
       );*/
-
-      res.send("Things went well: " + response.acknowledged);
+      res.send("Things went well: ");
+      //res.send("Things went well: " + response.acknowledged);
     } else {
       res.send("album doesnt exist");
     }
