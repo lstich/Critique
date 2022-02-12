@@ -49,6 +49,8 @@ router.post("/userRateAlbum", async function (req, res, next) {
 
       console.log("Map " + newMap.size + " " + newMap.get("user1"));
 
+      console.log("map to arr: " + Array.from(newMap));
+
       //newMap.set(username, rating);
 
       //console.log("num " + album.userRatings);
