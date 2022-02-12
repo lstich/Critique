@@ -25,7 +25,6 @@ router.post("/userRateAlbum", async function (req, res, next) {
         userId: username,
         rating: rating,
       };
-      let num = album.numRatings + 1;
 
       console.log("please be nll: " + album.userRatings[0] === null);
       console.log("please be nll: " + album.userRatings[0] == null);
@@ -34,7 +33,11 @@ router.post("/userRateAlbum", async function (req, res, next) {
       if (album.userRatings[0] === null) {
         album.userRatings.shift;
       }
+      album.userRatings.filter((element) => {
+        return element !== null;
+      });
 
+      console.log(album.userRatings);
       //let newMap = new Map(
       // album.userRatings.map((obj) => [obj.userId, obj.rating])
       //);
