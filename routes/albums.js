@@ -37,6 +37,10 @@ router.post("/userRateAlbum", async function (req, res, next) {
         return element !== null;
       });
 
+      if (album.userRatings.includes(null) == true) {
+        console.log("array2 contains null value");
+      }
+
       console.log(album.userRatings);
       //let newMap = new Map(
       // album.userRatings.map((obj) => [obj.userId, obj.rating])
