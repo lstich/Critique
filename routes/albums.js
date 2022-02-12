@@ -27,15 +27,11 @@ router.post("/userRateAlbum", async function (req, res, next) {
       };
       let num = album.numRatings + 1;
 
-      let newSet = [...new Set(album.userRatings)];
+      let newMap = new Map(
+        album.userRatings.map((obj) => [obj.userId, obj.rating])
+      );
 
-      console.log("Set " + newSet);
-
-      newSet.delete(null);
-
-      console.log("Set 2" + newSet);
-
-      console.log("Set " + newSet);
+      console.log("Map " + newMap);
 
       console.log("num " + album.userRatings);
 
