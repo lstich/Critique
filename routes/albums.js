@@ -35,28 +35,31 @@ router.post("/userRateAlbum", async function (req, res, next) {
         return element !== null;
       });
 
-      if (album.userRatings.includes(null) == true) {
+      /*if (album.userRatings.includes(null) == true) {
         console.log("array2 contains null value");
-      }
+      }*/
       if (album.userRatings.indexOf(null) == 0) {
         album.userRatings.shift();
       }
 
       //console.log(album.userRatings);
-      let newMap = new Map(
+      /*let newMap = new Map(
         album.userRatings.map((obj) => [obj.userId, obj.rating])
-      );
+      );*/
 
-      console.log("Map " + newMap.size + " " + newMap.keys());
+      //console.log("Map " + newMap.size + " " + newMap.keys());
 
-      newMap.set(username, rating);
+      //newMap.set(username, rating);
 
       //console.log("num " + album.userRatings);
 
       //console.log(album.userRatings);
 
-      album.userRatings = newMap;
-      album.numRatings.size;
+      album.userRatings.push(newRating);
+
+      album.userRatings;
+
+      album.numRatings = album.userRatings.length;
 
       //console.log(album.userRatings);
 
