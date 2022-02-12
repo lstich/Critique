@@ -72,17 +72,20 @@ export default class Swipe extends Component {
                 title={album.title}
                 artist={album.artist}
                 cover={album.cover}
-                rating="81"
+                rating={album.rating}
               />
             );
           })}
           onSwipedLeft={(cardIndex) => {
             console.log(cardIndex);
-            //this.state.albums[cardIndex].albumId
-            this.swipeApi(this.state.albums[cardIndex].albumId, 0);
+            if (cardIndex) {
+              this.swipeApi(this.state.albums[cardIndex].albumId, 0);
+            }
           }}
           onSwipedRight={(cardIndex) => {
-            this.swipeApi(this.state.albums[cardIndex].albumId, 1);
+            if (cardIndex) {
+              this.swipeApi(this.state.albums[cardIndex].albumId, 1);
+            }
           }}
           onSwipedTop={(cardIndex) => {}}
           renderCard={(card) => {

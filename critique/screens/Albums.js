@@ -1,5 +1,11 @@
 import { React, Component } from "react";
-import { Button, StyleSheet, ScrollView, Pressable } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  View,
+  SafeAreaView,
+} from "react-native";
 import axios from "axios";
 
 import AlbumListCard from "./../components/album-list-card";
@@ -8,6 +14,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 50,
+  },
+  screen: {
+    flex: 1,
   },
   spinner: {
     flex: 1,
@@ -21,6 +30,7 @@ export default class Albums extends Component {
     super(props);
     this.state = {
       albums: [],
+      spinner: true,
     };
   }
 
@@ -28,12 +38,14 @@ export default class Albums extends Component {
     this.doApiCall();
   }
 
+  com;
   doApiCall() {
     try {
       axios
         .get(`https://critique-heroku.herokuapp.com/albums/getalbums`)
         .then((res) => {
           if (res) {
+            this.setState({ spinner: false });
             this.setState({
               albums: res.data.albums,
             });
@@ -46,19 +58,29 @@ export default class Albums extends Component {
 
   render() {
     return (
-      <ScrollView style={styles.container} ref={(ref) => (this.scroll = ref)}>
-        {this.state.albums.map((album) => (
-          <Pressable style={{ paddingTop: 10 }}>
-            <AlbumListCard
-              title={album.title}
-              artist={album.artist}
-              cover={album.cover}
-              rating="81"
-            />
-          </Pressable>
-        ))}
-        <Button title="Go to Details" onPress={() => this.doApiCall()} />
-      </ScrollView>
+      <SafeAreaView style={styles.screen}>
+        {this.state.spinner ? (
+          <ActivityIndicator
+            style={styles.spinner}
+            visible={this.state.spinner}
+            size="large"
+            color="#ffffff"
+          />
+        ) : (
+          <ScrollView style={styles.screen} ref={(ref) => (this.scroll = ref)}>
+            {this.state.albums.map((album) => (
+              <View key={album.albumId} style={{ paddingTop: 10 }}>
+                <AlbumListCard
+                  title={album.title}
+                  artist={album.artist}
+                  cover={album.cover}
+                  rating={album.rating}
+                />
+              </View>
+            ))}
+          </ScrollView>
+        )}
+      </SafeAreaView>
     );
   }
 }

@@ -66,6 +66,7 @@ export default class App extends React.Component {
             component={Login}
             //children={() => <Login action={this.setActiveUser} />}
             options={{
+              headerShown: false,
               tabBarLabel: "Login",
               tabBarIcon: ({ color }) => (
                 <MaterialIcons name="star" color={color} size={26} />
@@ -75,7 +76,7 @@ export default class App extends React.Component {
           <Stack.Screen
             name="AppTabs"
             component={AppTabs}
-            options={{ headerShown: false }}
+            options={{ headerShown: false, gestureEnabled: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -52,22 +52,8 @@ const styles = StyleSheet.create({
 });
 
 function Login({ navigation, action }) {
-  /*constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-      loggedInUser: null,
-      res: null,
-    };
-  }*/
-
   let email = "";
   let password = "";
-  let loggedInUser = null;
-
-  //props.setActiveUser();
-  //console.log(navigation.navigate("Swipe"));
 
   const handleEmailChange = (value) => {
     email = value;
@@ -91,8 +77,7 @@ function Login({ navigation, action }) {
         .then(async function (res) {
           if (res) {
             console.log(res.data);
-            //console.log(navigation);
-            //navigation.push("Swipe");
+
             navigation.navigate("AppTabs", {
               screen: "Swipe",
               params: {
@@ -104,10 +89,10 @@ function Login({ navigation, action }) {
 
             //this.props.propName(user.username);
             //this.setActive(user.username);
-            await AsyncStorage.setItem("activeUser", user.username);
+            /*await AsyncStorage.setItem("activeUser", user.username);
             console.log(
               "yeahhh man " + (await AsyncStorage.getItem("activeUser"))
-            );
+            );*/
           }
         })
         .catch((err) => {
@@ -122,7 +107,7 @@ function Login({ navigation, action }) {
       username: email,
       password: password,
     };
-    console.log("hi");
+    console.log(emai);
     try {
       axios
         .post(`https://critique-heroku.herokuapp.com/users/register`, {
@@ -131,7 +116,7 @@ function Login({ navigation, action }) {
         })
         .then(async function (res) {
           if (res) {
-            console.log(res.data);
+            console.log(res);
           }
         })
         .catch((err) => {
@@ -139,29 +124,6 @@ function Login({ navigation, action }) {
         });
     } catch (err) {
       console.log(err);
-    }
-  };
-
-  const storeData = async (value) => {
-    try {
-      await AsyncStorage.setItem("@activeUser", value);
-      console.log("Yess");
-    } catch (e) {
-      // saving error
-    }
-  };
-
-  const getData = async () => {
-    try {
-      console.log("value");
-      let value = await AsyncStorage.getItem("@activeUser");
-      console.log(value);
-      if (value !== null) {
-        console.log("Hellooo" + value);
-        // value previously stored
-      }
-    } catch (e) {
-      // error reading value
     }
   };
 
@@ -216,7 +178,7 @@ function Login({ navigation, action }) {
           title="Register"
           onPress={(press) => {
             press.preventDefault();
-            this.handleRegister();
+            handleRegister();
           }}
         />
       </View>
