@@ -1,6 +1,8 @@
 import { React, Component } from "react";
 import { Button, StyleSheet, View, TextInput, Text, Image } from "react-native";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+//import { withNavigation } from "react-navigation";
 
 const styles = StyleSheet.create({
   buttons: {
@@ -49,30 +51,38 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Login extends Component {
-  constructor(props) {
+function Login({ navigation, action }) {
+  /*constructor(props) {
     super(props);
     this.state = {
       email: "",
       password: "",
+      loggedInUser: null,
+      res: null,
     };
-  }
+  }*/
 
-  handleEmailChange = (value) => {
-    this.setState({ email: value });
+  let email = "";
+  let password = "";
+  let loggedInUser = null;
+
+  //props.setActiveUser();
+  //console.log(navigation.navigate("Swipe"));
+
+  const handleEmailChange = (value) => {
+    email = value;
   };
 
-  handlePasswordChange = (value) => {
-    this.setState({ password: value });
+  const handlePasswordChange = (value) => {
+    password = value;
   };
 
-  handleLogin = async () => {
+  const handleLogin = async () => {
     try {
       let user = {
-        username: this.state.email,
-        password: this.state.password,
+        username: email,
+        password: password,
       };
-      console.log(this.state.email + " " + this.state.password);
       axios
         .post(`https://critique-heroku.herokuapp.com/users/login`, {
           username: user.username,
@@ -81,6 +91,23 @@ export default class Login extends Component {
         .then(async function (res) {
           if (res) {
             console.log(res.data);
+            //console.log(navigation);
+            //navigation.push("Swipe");
+            navigation.navigate("AppTabs", {
+              screen: "Swipe",
+              params: {
+                user: user.username,
+              },
+            });
+            //this.setState({ res: res.data, loggedInUser: username });
+            //_storeActiveUser(username);
+
+            //this.props.propName(user.username);
+            //this.setActive(user.username);
+            await AsyncStorage.setItem("activeUser", user.username);
+            console.log(
+              "yeahhh man " + (await AsyncStorage.getItem("activeUser"))
+            );
           }
         })
         .catch((err) => {
@@ -90,10 +117,10 @@ export default class Login extends Component {
       console.log(err);
     }
   };
-  handleRegister = async () => {
+  const handleRegister = async () => {
     let user = {
-      username: this.state.email,
-      password: this.state.password,
+      username: email,
+      password: password,
     };
     console.log("hi");
     try {
@@ -115,67 +142,85 @@ export default class Login extends Component {
     }
   };
 
-  componentDidMount() {}
+  const storeData = async (value) => {
+    try {
+      await AsyncStorage.setItem("@activeUser", value);
+      console.log("Yess");
+    } catch (e) {
+      // saving error
+    }
+  };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.logoHeader}>
-          <Text
-            style={{
-              color: "white",
-              fontSize: "38",
-              fontFamily: "Arial",
-              fontWeight: "700",
-              paddingBottom: 10,
-            }}
-          >
-            Critique
-          </Text>
-          <Image
-            style={{ height: 100, width: 100 }}
-            source={require("./../assets/Critique_Wireframe.jpg")}
-          ></Image>
-        </View>
-        <View style={styles.infoBox}>
-          <Text style={styles.text}>Email:</Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Enter your Email"
-            textContentType="emailAddress"
-            onChangeText={(value) => this.handleEmailChange(value)}
-          ></TextInput>
-        </View>
-        <View style={styles.infoBox}>
-          <Text style={styles.text}>Password:</Text>
-          <TextInput
-            style={styles.textInput}
-            clearTextOnFocus
-            textContentType="password"
-            passwordRules
-            placeholder="Enter Your Password"
-            onChangeText={(value) => this.handlePasswordChange(value)}
-          ></TextInput>
-        </View>
-        <View style={styles.buttons}>
-          <Button
-            title="Login"
-            onPress={(press) => {
-              press.preventDefault();
-              this.handleLogin();
-              console.log(this.state.email + " " + this.state.password);
-            }}
-          />
-          <Button
-            title="Register"
-            onPress={(press) => {
-              press.preventDefault();
-              this.handleRegister();
-              console.log(this.state.email + " " + this.state.password);
-            }}
-          />
-        </View>
+  const getData = async () => {
+    try {
+      console.log("value");
+      let value = await AsyncStorage.getItem("@activeUser");
+      console.log(value);
+      if (value !== null) {
+        console.log("Hellooo" + value);
+        // value previously stored
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.logoHeader}>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 38,
+            fontFamily: "Arial",
+            fontWeight: "700",
+            paddingBottom: 10,
+          }}
+        >
+          Critique
+        </Text>
+        <Image
+          style={{ height: 100, width: 100 }}
+          source={require("./../assets/Critique_Wireframe.jpg")}
+        ></Image>
       </View>
-    );
-  }
+      <View style={styles.infoBox}>
+        <Text style={styles.text}>Email:</Text>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter your Email"
+          textContentType="emailAddress"
+          onChangeText={(value) => handleEmailChange(value)}
+        ></TextInput>
+      </View>
+      <View style={styles.infoBox}>
+        <Text style={styles.text}>Password:</Text>
+        <TextInput
+          style={styles.textInput}
+          clearTextOnFocus
+          textContentType="password"
+          passwordRules
+          placeholder="Enter Your Password"
+          onChangeText={(value) => handlePasswordChange(value)}
+        ></TextInput>
+      </View>
+      <View style={styles.buttons}>
+        <Button
+          title="Login"
+          onPress={(press) => {
+            press.preventDefault();
+            handleLogin();
+          }}
+        />
+        <Button
+          title="Register"
+          onPress={(press) => {
+            press.preventDefault();
+            this.handleRegister();
+          }}
+        />
+      </View>
+    </View>
+  );
 }
+export default Login;

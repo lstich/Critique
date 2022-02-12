@@ -5,7 +5,7 @@ import Colours from "../components/styles.js";
 export default class Settings extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { nav: props.navigation };
   }
 
   componentDidMount() {}
@@ -44,7 +44,7 @@ export default class Settings extends Component {
           />
           <Button
             title="Logout"
-            onPress={() => navigation.navigate("Settings")}
+            onPress={() => this.state.nav.navigate("Login")}
           />
         </View>
       </View>

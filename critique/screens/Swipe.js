@@ -9,10 +9,17 @@ export default class Swipe extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      nav: props,
+      username: null,
       albums: [],
       borderColour: "black",
       cardColour: "white",
     };
+  }
+  componentDidUpdate() {
+    if (this.state.username == null) {
+      this.setState({ username: this.state.nav.route.params.user });
+    }
   }
 
   componentDidMount() {
@@ -35,6 +42,15 @@ export default class Swipe extends Component {
       console.log(err);
     }
   }
+
+  swipeGreen() {
+    console.log("hahah");
+  }
+
+  swipeRed() {}
+
+  swipeBlue() {}
+
   render() {
     return (
       <View style={styles.container}>
@@ -49,6 +65,17 @@ export default class Swipe extends Component {
               />
             );
           })}
+          onSwipedLeft={(cardIndex) => {
+            console.log(cardIndex);
+            //this.state.albums[cardIndex].albumId
+            this.swipeRed;
+          }}
+          onSwipedRight={(cardIndex) => {
+            this.swipeGreen;
+          }}
+          onSwipedTop={(cardIndex) => {
+            this.swipeBlue;
+          }}
           renderCard={(card) => {
             return (
               <View
@@ -67,7 +94,8 @@ export default class Swipe extends Component {
             );
           }}
           onSwiped={(cardIndex) => {
-            console.log(cardIndex);
+            //console.log(cardIndex);
+            //console.log(this.state.albums[cardIndex]);
             this.setState({ cardColour: "white" });
           }}
           onSwipedAll={() => {
