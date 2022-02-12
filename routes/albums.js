@@ -25,49 +25,30 @@ router.post("/userRateAlbum", async function (req, res, next) {
         userId: username,
         rating: rating,
       };
-
-      console.log("please be nll: " + album.userRatings[0] === null);
-      console.log("please be nll: " + album.userRatings[0] == null);
-      console.log("please be nll: " + album.userRatings[0] === "null");
-      console.log("please be nll: " + album.userRatings[0] == "null");
-
-      album.userRatings.filter((element) => {
-        return element !== null;
-      });
-
-      /*if (album.userRatings.includes(null) == true) {
-        console.log("array2 contains null value");
-      }*/
+      //remove null value if exists
       if (album.userRatings.indexOf(null) == 0) {
         album.userRatings.shift();
       }
+      //add new rating
       album.userRatings.push(newRating);
 
-      //console.log(album.userRatings);
+      //convert ratings to map to remove duplicates
       let newMap = new Map(
         album.userRatings.map((obj) => [obj.userId, obj.rating])
       );
 
-      console.log("Map " + newMap.size + " " + newMap.get("user1"));
-
-      console.log("map to arr: ");
-
+      //convert map back to array for storing
       let arr = Array.from(newMap, function (item) {
         return { userId: item[0], rating: item[1] };
       });
 
-      console.log(arr);
-
+      //set userRatings and update numRatings
       album.userRatings = arr;
-
       album.numRatings = album.userRatings.length;
-
-      //console.log(album.userRatings);
 
       album.save().then(
         (doc) => {
           console.log("Sent! ", doc);
-          //res.send({ albums });
         },
         (err) => {
           res.status(400).send(err);
@@ -77,20 +58,13 @@ router.post("/userRateAlbum", async function (req, res, next) {
           res.status(400).send(err);
         };
 
-      /*let response = await Album.updateOne(
-        { albumId: albumId },
-        { numRatings: num, userRatings: album.userRatings.push(newRating) }
-      );*/
-      res.send("Things went well: ");
-      //res.send("Things went well: " + response.acknowledged);
+      res.send("Things went well! ");
     } else {
       res.send("album doesnt exist");
     }
   } catch (err) {
     console.log(err);
   }
-
-  //create and add new user
 });
 
 router.post("/addAlbum", function (req, res, next) {
