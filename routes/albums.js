@@ -58,7 +58,7 @@ router.post("/userRateAlbum", async function (req, res, next) {
 
       console.log(arr);
 
-      album.userRatings = [...newMap];
+      album.userRatings = arr;
 
       album.numRatings = album.userRatings.length;
 
