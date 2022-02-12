@@ -17,20 +17,20 @@ router.get("/getAlbums", function (req, res, next) {
 });
 
 router.post("/userRateAlbum", async function (req, res, next) {
-  let { username, albumId, rating } = req.body;
+  let { username, albumId, userRating } = req.body;
   try {
     let album = await Album.findOne({ albumId: albumId });
     if (album) {
-      let newRating = {
+      let newUserRating = {
         userId: username,
-        rating: rating,
+        rating: userRating,
       };
       //remove null value if exists
       if (album.userRatings.indexOf(null) == 0) {
         album.userRatings.shift();
       }
       //add new rating
-      album.userRatings.push(newRating);
+      album.userRatings.push(newUserRating);
 
       //convert ratings to map to remove duplicates
       let newMap = new Map(
