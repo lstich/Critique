@@ -43,11 +43,11 @@ router.post("/userRateAlbum", async function (req, res, next) {
       }
 
       //console.log(album.userRatings);
-      /*let newMap = new Map(
+      let newMap = new Map(
         album.userRatings.map((obj) => [obj.userId, obj.rating])
-      );*/
+      );
 
-      //console.log("Map " + newMap.size + " " + newMap.keys());
+      console.log("Map " + newMap.size + " " + newMap.get("user1"));
 
       //newMap.set(username, rating);
 
