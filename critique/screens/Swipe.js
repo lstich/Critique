@@ -1,5 +1,6 @@
 import { React, Component } from "react";
 import {
+  Text,
   View,
   StyleSheet,
   SafeAreaView,
@@ -20,24 +21,33 @@ export default class Swipe extends Component {
       borderColour: "black",
       cardColour: "white",
       spinner: true,
+      allCardsSwiped: false,
     };
   }
   componentDidUpdate() {
     if (this.state.username == null) {
       this.setState({ username: this.state.nav.route.params.user });
+      console.log(this.state.nav.route.params.user);
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    if (this.state.username == null) {
+      await this.setState({ username: this.state.nav.route.params.user });
+    }
     this.fetchAlbums();
   }
 
   fetchAlbums() {
     try {
+      console.log(this.state.username == "q");
       axios
-        .get(`https://critique-heroku.herokuapp.com/albums/getalbums`)
+        .post(`https://critique-heroku.herokuapp.com/albums/getNewAlbums`, {
+          username: this.state.username,
+        })
         .then((res) => {
           if (res) {
+            //console.log(this.state.username == "q");
             this.setState({ spinner: false });
             this.setState({
               albums: res.data.albums,
@@ -60,7 +70,7 @@ export default class Swipe extends Component {
         })
         .then(async function (res) {
           if (res) {
-            console.log(res);
+            //console.log(res);
           }
         });
       //console.log(Object.values(this.state.albums));
@@ -80,80 +90,97 @@ export default class Swipe extends Component {
             color="#ffffff"
           />
         ) : (
-          <View style={styles.container}>
-            <Swiper
-              cards={this.state.albums.map((album) => {
-                return (
-                  <AlbumTileCard
-                    title={album.title}
-                    artist={album.artist}
-                    cover={album.cover}
-                    rating={album.rating}
-                  />
-                );
-              })}
-              onSwipedLeft={(cardIndex) => {
-                console.log(cardIndex);
-                if (cardIndex) {
-                  this.swipeApi(this.state.albums[cardIndex].albumId, 0);
-                }
-              }}
-              onSwipedRight={(cardIndex) => {
-                if (cardIndex) {
-                  this.swipeApi(this.state.albums[cardIndex].albumId, 1);
-                }
-              }}
-              onSwipedTop={(cardIndex) => {}}
-              renderCard={(card) => {
-                return (
-                  <View
-                    style={
-                      this.state.cardColour == "blue"
-                        ? styles.cardBlue
-                        : this.state.cardColour == "green"
-                        ? styles.cardGreen
-                        : this.state.cardColour == "red"
-                        ? styles.cardRed
-                        : styles.card
+          <>
+            {this.state.allCardsSwiped ? (
+              <View style={styles.flexstyle}>
+                <Text style={styles.text}>All albums rated!</Text>
+              </View>
+            ) : (
+              <View style={styles.container}>
+                <Swiper
+                  cards={this.state.albums.map((album) => {
+                    return (
+                      <AlbumTileCard
+                        title={album.title}
+                        artist={album.artist}
+                        cover={album.cover}
+                        rating={album.rating}
+                      />
+                    );
+                  })}
+                  onSwipedLeft={(cardIndex) => {
+                    console.log(cardIndex);
+                    if (cardIndex < this.state.albums.length) {
+                      this.swipeApi(this.state.albums[cardIndex].albumId, 0);
+                    } else {
+                      this.setState({ allCardsSwiped: true });
                     }
-                  >
-                    {card}
-                  </View>
-                );
-              }}
-              onSwiped={(cardIndex) => {
-                //console.log(cardIndex);
-                //console.log(this.state.albums[cardIndex]);
-                this.setState({ cardColour: "white" });
-              }}
-              onSwipedAll={() => {
-                console.log("onSwipedAll");
-              }}
-              onSwipedAborted={() => {
-                this.setState({ cardColour: "white" });
-              }}
-              onSwiping={(x, y) => {
-                if (Math.abs(x) > Math.abs(y)) {
-                  if (x > 0) {
-                    this.setState({ cardColour: "green" });
-                  } else {
-                    this.setState({ cardColour: "red" });
-                  }
-                } else {
-                  if (y < 0) {
-                    this.setState({ cardColour: "blue" });
-                  } else {
+                  }}
+                  onSwipedRight={(cardIndex) => {
+                    if (cardIndex < this.state.albums.length) {
+                      this.swipeApi(this.state.albums[cardIndex].albumId, 1);
+                    } else {
+                      this.setState({ allCardsSwiped: true });
+                    }
+                  }}
+                  onSwipedTop={(cardIndex) => {}}
+                  renderCard={(card) => {
+                    if (!card && this.state.spinner == false) {
+                      //this.setState({ allCardsSwiped: true });
+                    }
+                    return (
+                      <View
+                        style={
+                          this.state.cardColour == "blue"
+                            ? styles.cardBlue
+                            : this.state.cardColour == "green"
+                            ? styles.cardGreen
+                            : this.state.cardColour == "red"
+                            ? styles.cardRed
+                            : styles.card
+                        }
+                      >
+                        {card}
+                      </View>
+                    );
+                  }}
+                  onSwiped={(cardIndex) => {
+                    //console.log(cardIndex);
+                    //console.log(this.state.albums[cardIndex]);
                     this.setState({ cardColour: "white" });
-                  }
-                }
-              }}
-              cardIndex={0}
-              backgroundColor={"black"}
-              stackSize={2}
-              disableBottomSwipe={true}
-              containerStyle={styles.container}
-            ></Swiper>
-          </View>
+                  }}
+                  onSwipedAll={() => {
+                    this.setState({ allCardsSwiped: true });
+                    console.log("onSwipedAll");
+                  }}
+                  onSwipedAborted={() => {
+                    this.setState({ cardColour: "white" });
+                  }}
+                  onSwiping={(x, y) => {
+                    if (Math.abs(x) > Math.abs(y)) {
+                      if (x > 0) {
+                        this.setState({ cardColour: "green" });
+                      } else {
+                        this.setState({ cardColour: "red" });
+                      }
+                    } else {
+                      if (y < 0) {
+                        this.setState({ cardColour: "blue" });
+                      } else {
+                        this.setState({ cardColour: "white" });
+                      }
+                    }
+                  }}
+                  cardIndex={0}
+                  backgroundColor={"black"}
+                  stackSize={2}
+                  disableBottomSwipe={true}
+                  infinite={false}
+                  containerStyle={styles.container}
+                ></Swiper>
+              </View>
+            )}
+          </>
         )}
       </SafeAreaView>
     );
@@ -172,6 +199,15 @@ const styles = StyleSheet.create({
   },
   flexstyle: {
     flex: 1,
+  },
+  text: {
+    color: "white",
+    fontSize: 24,
+    flex: 1,
+    paddingTop: 100,
+    justifyContent: "center",
+    textAlign: "center",
+    alignItems: "center",
   },
   spinner: {
     flex: 1,

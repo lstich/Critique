@@ -1,7 +1,16 @@
 import { React, Component } from "react";
-import { Button, StyleSheet, View, TextInput, Text, Image } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  View,
+  TextInput,
+  Text,
+  Image,
+  Alert,
+} from "react-native";
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+//import AsyncStorage from "@react-native-async-storage/async-storage";
+
 //import { withNavigation } from "react-navigation";
 
 const styles = StyleSheet.create({
@@ -107,7 +116,8 @@ function Login({ navigation, action }) {
       username: email,
       password: password,
     };
-    console.log(emai);
+    console.log(user);
+    console.log(email);
     try {
       axios
         .post(`https://critique-heroku.herokuapp.com/users/register`, {
@@ -116,6 +126,10 @@ function Login({ navigation, action }) {
         })
         .then(async function (res) {
           if (res) {
+            Alert.alert("Account Registered!", "Please log in", [
+              { text: "OK", onPress: () => console.log("OK Pressed") },
+            ]);
+
             console.log(res);
           }
         })
@@ -152,6 +166,8 @@ function Login({ navigation, action }) {
           style={styles.textInput}
           placeholder="Enter your Email"
           textContentType="emailAddress"
+          returnKeyType="next"
+          //onSubmitEditing=
           onChangeText={(value) => handleEmailChange(value)}
         ></TextInput>
       </View>
@@ -162,6 +178,7 @@ function Login({ navigation, action }) {
           clearTextOnFocus
           textContentType="password"
           passwordRules
+          returnKeyType="go"
           placeholder="Enter Your Password"
           onChangeText={(value) => handlePasswordChange(value)}
         ></TextInput>
