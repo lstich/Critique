@@ -103,7 +103,7 @@ router.post("/resetUserRatings", async function (req, res, next) {
         });
 
         for (let j = 0; j < albums[i].userRatings.length; j++) {
-          test = test + " " + albums[i].userRatings[j].userId;
+          test = test + " " + albums[i].userRatings[j].userId == "q";
           if (albums[i].userRatings[j].userId == username) {
             flag++;
             albums[i].userRatings =
