@@ -93,9 +93,16 @@ router.post("/userRateAlbum", async function (req, res, next) {
 router.post("/resetUserRatings", async function (req, res, next) {
   let { username } = req.body;
   try {
-    let album = await Album.find();
-    if (album) {
-      res.send("Things went well! " + album);
+    let albums = await Album.find();
+    if (albums) {
+      for (let i = 0; i < albums.length; i++) {
+        album[i] = albums[i].arrayRemove(albums[i].userRatings, username);
+        //for(let j = 0; j < albums[i].userRatings.length; j++) {
+        //if (albums[i].userRatings[j].userID == username){
+        //  albums[i].
+        //}
+      }
+      res.send("Things went well! " + albums);
       /*
       //set album rating
       let ratingScore = 0;
@@ -132,6 +139,12 @@ router.post("/resetUserRatings", async function (req, res, next) {
     console.log(err);
   }
 });
+
+function arrayRemove(arr, value) {
+  return arr.filter(function (ele) {
+    return ele != value;
+  });
+}
 
 router.post("/addAlbum", function (req, res, next) {
   let newAlbum = new Album({
