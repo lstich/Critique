@@ -101,10 +101,11 @@ router.post("/resetUserRatings", async function (req, res, next) {
           test = ele.userId;
           return ele.userId != username;
         });
-        //for(let j = 0; j < albums[i].userRatings.length; j++) {
-        //if (albums[i].userRatings[j].userID == username){
-        //  albums[i].
-        //}
+        
+        for(let j = 0; j < albums[i].userRatings.length; j++) {
+          if (albums[i].userRatings[j].userId == username){
+            albums[i].userRatings = albums[i].userRatings.splice(0,j) + albums[i].userRatings.splice(j+1,albums[i].userRatings.length)
+        }
       }
       res.send("Things went well! " + username + " " + test + " " + albums);
       /*
