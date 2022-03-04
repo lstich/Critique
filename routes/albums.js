@@ -99,7 +99,7 @@ router.post("/resetUserRatings", async function (req, res, next) {
     if (albums) {
       for (let i = 0; i < albums.length; i++) {
         albums[i].userRatings = albums[i].userRatings.filter(function (ele) {
-          return ele.userId == username;
+          return ele.userId == toString(username);
         });
 
         /*
