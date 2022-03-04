@@ -100,7 +100,7 @@ function AppTabs() {
       />
       <Tab.Screen
         name="Swipe"
-        component={Screen}
+        component={Swipe}
         options={{
           tabBarLabel: "Swipe",
           tabBarIcon: ({ color }) => (

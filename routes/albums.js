@@ -93,7 +93,7 @@ router.post("/userRateAlbum", async function (req, res, next) {
 router.post("/resetUserRatings", async function (req, res, next) {
   let { username } = req.body;
   try {
-    let album = await Album.find({ userRating: { userId: username } });
+    let album = await Album.find();
     if (album) {
       res.send("Things went well! " + album);
       /*
