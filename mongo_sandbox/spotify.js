@@ -100,7 +100,6 @@ function addAlbumsToDB() {
 
       if (albums.body.next) {
         next = true;
-        //console.log("well ill be damned")
       } else {
         next = false;
       }

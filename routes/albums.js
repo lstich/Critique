@@ -90,6 +90,49 @@ router.post("/userRateAlbum", async function (req, res, next) {
   }
 });
 
+router.post("/resetUserRatings", async function (req, res, next) {
+  let { username } = req.body;
+  try {
+    let album = await Album.find({ userRating: { userId: username } });
+    if (album) {
+      res.send("Things went well! " + album);
+      /*
+      //set album rating
+      let ratingScore = 0;
+
+      arr.forEach(function (item) {
+        if (item.rating) {
+          ratingScore += item.rating;
+        }
+      });
+      let newRating = Math.round((ratingScore * 100) / arr.length);
+      //set userRatings, update numRatings and rating
+
+      album.rating = newRating;
+      album.userRatings = arr;
+      album.numRatings = album.userRatings.length;
+
+      album.save().then(
+        (doc) => {
+          console.log("Sent! ", doc);
+        },
+        (err) => {
+          res.status(400).send(err);
+        }
+      ),
+        (err) => {
+          res.status(400).send(err);
+        };
+*/
+      res.send("Things went well! ");
+    } else {
+      res.send("album doesnt exist");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.post("/addAlbum", function (req, res, next) {
   let newAlbum = new Album({
     albumId: "4",

@@ -10,6 +10,7 @@ import Albums from "./screens/Albums.js";
 import Settings from "./screens/Settings.js";
 import Swipe from "./screens/Swipe.js";
 import Login from "./screens/Login.js";
+import Screen from "./screens/screen.js";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -89,7 +90,7 @@ function AppTabs() {
     <Tab.Navigator initialRouteName="Swipe">
       <Tab.Screen
         name="Albums"
-        component={Albums}
+        component={Screen}
         options={{
           tabBarLabel: "Albums",
           tabBarIcon: ({ color }) => (
@@ -99,7 +100,7 @@ function AppTabs() {
       />
       <Tab.Screen
         name="Swipe"
-        component={Swipe}
+        component={Screen}
         options={{
           tabBarLabel: "Swipe",
           tabBarIcon: ({ color }) => (
@@ -109,7 +110,7 @@ function AppTabs() {
       />
       <Tab.Screen
         name="Settings"
-        component={Settings}
+        component={Screen}
         options={{
           tabBarLabel: "Settings",
           tabBarIcon: ({ color }) => (
