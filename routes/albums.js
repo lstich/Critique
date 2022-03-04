@@ -96,7 +96,9 @@ router.post("/resetUserRatings", async function (req, res, next) {
     let albums = await Album.find();
     if (albums) {
       for (let i = 0; i < albums.length; i++) {
-        albums[i] = albums[i].arrayRemove(albums[i].userRatings, username);
+        albums[i] = albums[i].userRatings.filter(function (ele) {
+          return ele.userId != username;
+        });
         //for(let j = 0; j < albums[i].userRatings.length; j++) {
         //if (albums[i].userRatings[j].userID == username){
         //  albums[i].
@@ -139,12 +141,6 @@ router.post("/resetUserRatings", async function (req, res, next) {
     console.log(err);
   }
 });
-
-function arrayRemove(arr, value) {
-  return arr.filter(function (ele) {
-    return ele != value;
-  });
-}
 
 router.post("/addAlbum", function (req, res, next) {
   let newAlbum = new Album({
