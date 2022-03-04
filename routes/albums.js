@@ -93,6 +93,7 @@ router.post("/userRateAlbum", async function (req, res, next) {
 router.post("/resetUserRatings", async function (req, res, next) {
   let { username } = req.body;
   let test = "";
+  let flag = 0;
   try {
     let albums = await Album.find();
     if (albums) {
@@ -104,13 +105,16 @@ router.post("/resetUserRatings", async function (req, res, next) {
 
         for (let j = 0; j < albums[i].userRatings.length; j++) {
           if (albums[i].userRatings[j].userId == username) {
+            flag++;
             albums[i].userRatings =
               albums[i].userRatings.splice(0, j - 1) +
               albums[i].userRatings.splice(j, albums[i].userRatings.length);
           }
         }
       }
-      res.send("Things went well! " + username + " " + test + " " + albums);
+      res.send(
+        "Things went well! " + flag + " " + username + " " + test + " " + albums
+      );
       /*
       //set album rating
       let ratingScore = 0;
