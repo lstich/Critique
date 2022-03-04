@@ -96,7 +96,7 @@ router.post("/resetUserRatings", async function (req, res, next) {
     let albums = await Album.find();
     if (albums) {
       for (let i = 0; i < albums.length; i++) {
-        album[i] = albums[i].arrayRemove(albums[i].userRatings, username);
+        albums[i] = albums[i].arrayRemove(albums[i].userRatings, username);
         //for(let j = 0; j < albums[i].userRatings.length; j++) {
         //if (albums[i].userRatings[j].userID == username){
         //  albums[i].
