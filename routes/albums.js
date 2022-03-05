@@ -107,7 +107,7 @@ router.post("/resetUserRatings", async function (req, res, next) {
         let ratingScore = 0;
         let ratings = 0;
         albums[i].userRatings.forEach(function (item) {
-          if (item.rating) {
+          if (item.rating == 1 || item.rating == 0) {
             ratings += 1;
             ratingScore += item.rating;
           }
