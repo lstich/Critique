@@ -60,7 +60,7 @@ router.post("/changePassword", async function (req, res, next) {
     username: username,
     password: password,
   });
-  newUser.save().then(
+  renewedUser.save().then(
     (user) => {
       res.send("Password Successfully Changed! " + user);
     },
