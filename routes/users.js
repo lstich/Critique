@@ -18,6 +18,8 @@ router.post("/login", async function (req, res, next) {
   if (existingUser) {
     bcrypt.compare(password, existingUser.password, function (err, result) {
       console.log(result);
+      console.log(password);
+      console.log(existingUser.password);
       if (result == true) {
         res.send("Logged in");
         // The Password is Correct!
