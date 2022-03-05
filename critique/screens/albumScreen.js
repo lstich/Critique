@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Screen extends Component {
+export default class albumScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -24,7 +24,7 @@ export default class Screen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Swipe</Text>
+        <Text style={styles.text}>Albums</Text>
       </View>
     );
   }

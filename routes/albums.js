@@ -98,25 +98,45 @@ router.post("/resetUserRatings", async function (req, res, next) {
     let albums = await Album.find();
     if (albums) {
       for (let i = 0; i < albums.length; i++) {
+        let oldAlbumRatings = albums[i].numRatings;
         albums[i].userRatings = albums[i].userRatings.filter(function (ele) {
           return ele.userId != username;
         });
 
-        /*
-        for (let j = 0; j < albums[i].userRatings.length; j++) {
-          test =
-            test + " " + toString(albums[i].userRatings[j].userId == username);
-          if (albums[i].userRatings[j].userId == username) {
-            flag = flag++;
-            albums[i].userRatings =
-              albums[i].userRatings.splice(0, j - 1) +
-              albums[i].userRatings.splice(j, albums[i].userRatings.length);
+        //set album rating
+        let ratingScore = 0;
+        let ratings = 0;
+        arr.forEach(function (item) {
+          if (item.rating) {
+            ratings += 1;
+            ratingScore += item.rating;
           }
-        }*/
+        });
+
+        //only update db rating if there has been a change
+        if (oldAlbumRatings != ratings) {
+          let newRating = Math.round((ratingScore * 100) / arr.length);
+
+          albums[i].rating = newRating;
+          albums[i].numRatings = ratings;
+
+          //save changes to database
+          album.save().then(
+            (doc) => {
+              console.log("Sent! ", doc);
+              res.send("Database updated");
+            },
+            (err) => {
+              res.status(400).send(err);
+            }
+          ),
+            (err) => {
+              res.status(400).send(err);
+            };
+        }
       }
-      res.send(
-        "Things went well! " + flag + " " + username + " " + test + " " + albums
-      );
+      res.send("Database already up to date");
+      //res.send("Things went well! " + flag + " " + username + " " + test + " " + albums);
       /*
       //set album rating
       let ratingScore = 0;
