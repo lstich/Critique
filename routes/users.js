@@ -2,7 +2,6 @@ var express = require("express");
 var router = express.Router();
 let bcrypt = require("bcrypt");
 
-let mongoose = require("./../db/mongoose");
 let User = require("../schema/User.model.js");
 
 let saltRounds = 10;
@@ -37,6 +36,7 @@ router.post("/login", async function (req, res, next) {
     return res.status(400).send("User not found!");
   }
 });
+
 router.post("/register", async function (req, res, next) {
   let { username, password } = req.body;
 
@@ -46,7 +46,6 @@ router.post("/register", async function (req, res, next) {
   //encrypt password
   try {
     bcrypt.hash(password, saltRounds, function (err, hash) {
-
       //create and add new user
       let newUser = new User({
         username: username,
@@ -65,9 +64,9 @@ router.post("/register", async function (req, res, next) {
         };
     });
   } catch (err) {
-    console.log(err)
-  });
-  
+    console.log(err);
+  }
+});
 
 router.post("/changePassword", async function (req, res, next) {
   let { username, password } = req.body;
@@ -76,14 +75,12 @@ router.post("/changePassword", async function (req, res, next) {
   let existingUser = await User.findOne({ username: username });
   if (!existingUser) return res.status(400).send("User doesnt exist!");
 
-
   try {
     bcrypt.hash(p, saltRounds, function (err, hash) {
       // Store hash in your password DB.
       console.log(hash);
 
-
-       //create and add new user
+      //create and add new user
 
       existingUser.password = hash;
       existingUser.save().then(
@@ -94,14 +91,13 @@ router.post("/changePassword", async function (req, res, next) {
           res.status(400).send(err);
         }
       ),
-      (err) => {
-        res.status(400).send(err);
-      };
+        (err) => {
+          res.status(400).send(err);
+        };
     });
   } catch (err) {
     console.log(err);
   }
 });
- 
 
 module.exports = router;
