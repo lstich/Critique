@@ -16,7 +16,7 @@ router.post("/login", async function (req, res, next) {
 
   let existingUser = await User.findOne({ username: username });
   if (existingUser) {
-    bcrypt.compare(passord, existingUser.password, function (err, result) {
+    bcrypt.compare(password, existingUser.password, function (err, result) {
       console.log(result);
       if (result == true) {
         res.send("Logged in");
