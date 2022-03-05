@@ -85,9 +85,7 @@ router.post("/changePassword", async function (req, res, next) {
         console.log(err);
       }
 
-      res.send(
-        "Password Successfully Changed! " + user + " " + hash + " " + rest
-      );
+      res.send("Password Successfully Changed! " + user + " " + rest);
     },
     (err) => {
       res.status(400).send(err);
