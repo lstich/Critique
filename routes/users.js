@@ -48,4 +48,29 @@ router.post("/register", async function (req, res, next) {
     };
 });
 
+router.post("/changePassword", async function (req, res, next) {
+  let { username, password } = req.body;
+
+  let existingUser = await User.findOne({ username: username });
+  if (!existingUser) return res.status(400).send("User doesnt exist!");
+
+  //create and add new user
+
+  let renewedUser = new User({
+    username: username,
+    password: password,
+  });
+  newUser.save().then(
+    (user) => {
+      res.send("Password Successfully Changed! " + user);
+    },
+    (err) => {
+      res.status(400).send(err);
+    }
+  ),
+    (err) => {
+      res.status(400).send(err);
+    };
+});
+
 module.exports = router;

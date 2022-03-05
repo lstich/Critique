@@ -92,7 +92,7 @@ function AppTabs() {
     <Tab.Navigator initialRouteName="Swipe">
       <Tab.Screen
         name="Albums"
-        component={albumScreen}
+        component={Albums}
         options={{
           tabBarLabel: "Albums",
           tabBarIcon: ({ color }) => (
@@ -112,7 +112,7 @@ function AppTabs() {
       />
       <Tab.Screen
         name="Settings"
-        component={settingScreen}
+        component={Settings}
         options={{
           tabBarLabel: "Settings",
           tabBarIcon: ({ color }) => (

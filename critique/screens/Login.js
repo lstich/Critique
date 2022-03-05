@@ -86,7 +86,8 @@ function Login({ navigation, action }) {
         .then(async function (res) {
           if (res) {
             console.log(res.data);
-
+            this.userInput.clear();
+            this.passwordInput.clear();
             navigation.navigate("AppTabs", {
               screen: "Swipe",
               params: {
@@ -165,6 +166,9 @@ function Login({ navigation, action }) {
         <TextInput
           style={styles.textInput}
           placeholder="Enter your Email"
+          ref={(input) => {
+            this.userInput = input;
+          }}
           textContentType="emailAddress"
           returnKeyType="next"
           //onSubmitEditing=
@@ -178,8 +182,12 @@ function Login({ navigation, action }) {
           clearTextOnFocus
           textContentType="password"
           passwordRules
+          ref={(input) => {
+            this.passwordInput = input;
+          }}
           returnKeyType="go"
           placeholder="Enter Your Password"
+          secureTextEntry={true}
           onChangeText={(value) => handlePasswordChange(value)}
         ></TextInput>
       </View>

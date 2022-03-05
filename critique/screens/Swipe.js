@@ -34,6 +34,9 @@ export default class Swipe extends Component {
   async componentDidMount() {
     if (this.state.username == null) {
       await this.setState({ username: this.state.nav.route.params.user });
+      this.state.nav.navigation.setParams({
+        user: this.state.nav.route.params.user,
+      });
     }
     this.fetchAlbums();
   }
