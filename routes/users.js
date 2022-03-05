@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-let bcrypt = require("bcrypt");
+let bcrypt = require("bcryptjs");
 
 let User = require("../schema/User.model.js");
 
@@ -18,11 +18,11 @@ router.post("/login", async function (req, res, next) {
   if (existingUser) {
     bcrypt.compare(password, existingUser.password, function (err, result) {
       console.log(result);
-      console.log(password);
-      console.log(existingUser.password);
+      console.log("input p " + password);
+      console.log("DB " + existingUser.password);
 
       bcrypt.hash(password, saltRounds, function (err, hash) {
-        console.log(hash);
+        console.log("hashed p " + hash);
       });
       if (result == true) {
         res.send("Logged in");
