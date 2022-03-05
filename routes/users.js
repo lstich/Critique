@@ -20,6 +20,10 @@ router.post("/login", async function (req, res, next) {
       console.log(result);
       console.log(password);
       console.log(existingUser.password);
+
+      bcrypt.hash(password, saltRounds, function (err, hash) {
+        console.log(hash);
+      });
       if (result == true) {
         res.send("Logged in");
         // The Password is Correct!
