@@ -115,7 +115,9 @@ router.post("/resetUserRatings", async function (req, res, next) {
 
         //only update db rating if there has been a change
         if (oldAlbumRatings != ratings) {
-          let newRating = Math.round((ratingScore * 100) / arr.length);
+          let newRating = Math.round(
+            (ratingScore * 100) / albums[i].userRatings.length
+          );
 
           albums[i].rating = newRating;
           albums[i].numRatings = ratings;
