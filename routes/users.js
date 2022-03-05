@@ -1,8 +1,11 @@
 var express = require("express");
 var router = express.Router();
+let bcrypt = require("bcrypt");
 
 let mongoose = require("./../db/mongoose");
 let User = require("../schema/User.model.js");
+
+let saltRounds = 10;
 
 router.get("/", function (req, res, next) {
   res.status(400).send("yoooooo");
@@ -50,6 +53,7 @@ router.post("/register", async function (req, res, next) {
 
 router.post("/changePassword", async function (req, res, next) {
   let { username, password } = req.body;
+  let p = "password";
 
   let existingUser = await User.findOne({ username: username });
   if (!existingUser) return res.status(400).send("User doesnt exist!");
@@ -59,7 +63,11 @@ router.post("/changePassword", async function (req, res, next) {
   existingUser.password = password;
   existingUser.save().then(
     (user) => {
-      res.send("Password Successfully Changed! " + user);
+      bcrypt.hash(p, saltRounds, function (err, hash) {
+        // Store hash in your password DB.
+        console.log(hash);
+        res.send("Password Successfully Changed! " + user + " " + hash);
+      });
     },
     (err) => {
       res.status(400).send(err);
