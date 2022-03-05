@@ -58,7 +58,7 @@ router.post("/userRateAlbum", async function (req, res, next) {
       let ratingScore = 0;
 
       arr.forEach(function (item) {
-        if (item.rating) {
+        if (item.rating == 1 || item.rating == 0) {
           ratingScore += item.rating;
         }
       });
@@ -136,39 +136,11 @@ router.post("/resetUserRatings", async function (req, res, next) {
             res.status(400).send(err);
           };
       }
-      res.send("Database already up to date");
+      //res.send("Database already up to date");
       //res.send("Things went well! " + flag + " " + username + " " + test + " " + albums);
-      /*
-      //set album rating
-      let ratingScore = 0;
-
-      arr.forEach(function (item) {
-        if (item.rating) {
-          ratingScore += item.rating;
-        }
-      });
-      let newRating = Math.round((ratingScore * 100) / arr.length);
-      //set userRatings, update numRatings and rating
-
-      album.rating = newRating;
-      album.userRatings = arr;
-      album.numRatings = album.userRatings.length;
-
-      album.save().then(
-        (doc) => {
-          console.log("Sent! ", doc);
-        },
-        (err) => {
-          res.status(400).send(err);
-        }
-      ),
-        (err) => {
-          res.status(400).send(err);
-        };
-*/
       res.send("Things went well! ");
     } else {
-      res.send("album doesnt exist");
+      res.send("user doesnt exist");
     }
   } catch (err) {
     console.log(err);
