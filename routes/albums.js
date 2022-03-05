@@ -114,28 +114,27 @@ router.post("/resetUserRatings", async function (req, res, next) {
         });
 
         //only update db rating if there has been a change
-        if (oldAlbumRatings != ratings) {
-          let newRating = Math.round(
-            (ratingScore * 100) / albums[i].userRatings.length
-          );
 
-          albums[i].rating = newRating;
-          albums[i].numRatings = ratings;
+        let newRating = Math.round(
+          (ratingScore * 100) / albums[i].userRatings.length
+        );
 
-          //save changes to database
-          albums[i].save().then(
-            (doc) => {
-              console.log("Sent! ", doc);
-              res.send("Database updated");
-            },
-            (err) => {
-              res.status(400).send(err);
-            }
-          ),
-            (err) => {
-              res.status(400).send(err);
-            };
-        }
+        albums[i].rating = newRating;
+        albums[i].numRatings = ratings;
+
+        //save changes to database
+        albums[i].save().then(
+          (doc) => {
+            console.log("Sent! ", doc);
+            res.send("Database updated");
+          },
+          (err) => {
+            res.status(400).send(err);
+          }
+        ),
+          (err) => {
+            res.status(400).send(err);
+          };
       }
       res.send("Database already up to date");
       //res.send("Things went well! " + flag + " " + username + " " + test + " " + albums);
