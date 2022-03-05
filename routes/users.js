@@ -63,7 +63,7 @@ router.post("/changePassword", async function (req, res, next) {
   existingUser.password = password;
   existingUser.save().then(
     (user) => {
-      let res;
+      let rest;
       try {
         bcrypt.hash(p, saltRounds, function (err, hash) {
           // Store hash in your password DB.
@@ -73,10 +73,10 @@ router.post("/changePassword", async function (req, res, next) {
             console.log(result);
             // result == true
             if (result == true) {
-              res = true;
+              rest = true;
               // The Password is Correct!
             } else {
-              res = false;
+              rest = false;
               // Your password is not correct.
             }
           });
@@ -86,7 +86,7 @@ router.post("/changePassword", async function (req, res, next) {
       }
 
       res.send(
-        "Password Successfully Changed! " + user + " " + hash + " " + res
+        "Password Successfully Changed! " + user + " " + hash + " " + rest
       );
     },
     (err) => {
