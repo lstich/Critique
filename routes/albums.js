@@ -123,7 +123,7 @@ router.post("/resetUserRatings", async function (req, res, next) {
           albums[i].numRatings = ratings;
 
           //save changes to database
-          album.save().then(
+          albums.save().then(
             (doc) => {
               console.log("Sent! ", doc);
               res.send("Database updated");
