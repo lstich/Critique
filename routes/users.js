@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-let bcrypt = require("bcrypt");
+let bcrypt = require("bcryptjs");
 
 let User = require("../schema/User.model.js");
 
@@ -16,26 +16,18 @@ router.post("/login", async function (req, res, next) {
 
   let existingUser = await User.findOne({ username: username });
   if (existingUser) {
-    bcrypt.compare(
-      password,
-      existingUser.password,
-      async function (err, result) {
-        console.log(result);
-        console.log("input p " + password);
-        console.log("DB " + existingUser.password);
+    const validatePass = await bcrypt.compare(password, existingUser.password);
+    console.log(validatePass);
+    console.log("input p " + password);
+    console.log("DB " + existingUser.password);
 
-        bcrypt.hash(password, saltRounds, function (err, hash) {
-          console.log("hashed p " + hash);
-        });
-        if (result == true) {
-          res.send("Logged in");
-          // The Password is Correct!
-        } else {
-          res.status(400).send("Password incorrect!");
-          // Your password is not correct.
-        }
-      }
-    );
+    if (validatePass == true) {
+      res.send("Logged in");
+      // The Password is Correct!
+    } else {
+      res.status(400).send("Password incorrect!");
+      // Your password is not correct.
+    }
 
     /*if (password == existingUser.password) {
       res.send("Logged in");
@@ -55,24 +47,24 @@ router.post("/register", async function (req, res, next) {
 
   //encrypt password
   try {
-    bcrypt.hash(password, saltRounds, function (err, hash) {
-      //create and add new user
-      let newUser = new User({
-        username: username,
-        password: hash,
-      });
-      newUser.save().then(
-        (user) => {
-          res.send("New User added! " + user);
-        },
-        (err) => {
-          res.status(400).send(err);
-        }
-      ),
-        (err) => {
-          res.status(400).send(err);
-        };
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashPassword = await bcrypt.hash(password, salt);
+    //create and add new user
+    let newUser = new User({
+      username: username,
+      password: hashPassword,
     });
+    newUser.save().then(
+      (user) => {
+        res.send("New User added! " + user);
+      },
+      (err) => {
+        res.status(400).send(err);
+      }
+    ),
+      (err) => {
+        res.status(400).send(err);
+      };
   } catch (err) {
     console.log(err);
   }
