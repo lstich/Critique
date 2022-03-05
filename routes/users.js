@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-let bcrypt = require("bcryptjs");
+let bcrypt = require("bcrypt");
 
 let User = require("../schema/User.model.js");
 
@@ -16,22 +16,26 @@ router.post("/login", async function (req, res, next) {
 
   let existingUser = await User.findOne({ username: username });
   if (existingUser) {
-    bcrypt.compare(password, existingUser.password, function (err, result) {
-      console.log(result);
-      console.log("input p " + password);
-      console.log("DB " + existingUser.password);
+    bcrypt.compare(
+      password,
+      existingUser.password,
+      async function (err, result) {
+        console.log(result);
+        console.log("input p " + password);
+        console.log("DB " + existingUser.password);
 
-      bcrypt.hash(password, saltRounds, function (err, hash) {
-        console.log("hashed p " + hash);
-      });
-      if (result == true) {
-        res.send("Logged in");
-        // The Password is Correct!
-      } else {
-        res.status(400).send("Password incorrect!");
-        // Your password is not correct.
+        bcrypt.hash(password, saltRounds, function (err, hash) {
+          console.log("hashed p " + hash);
+        });
+        if (result == true) {
+          res.send("Logged in");
+          // The Password is Correct!
+        } else {
+          res.status(400).send("Password incorrect!");
+          // Your password is not correct.
+        }
       }
-    });
+    );
 
     /*if (password == existingUser.password) {
       res.send("Logged in");
