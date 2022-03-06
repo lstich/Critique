@@ -103,9 +103,13 @@ function Login({ navigation, action }) {
             console.log(
               "yeahhh man " + (await AsyncStorage.getItem("activeUser"))
             );*/
+          } else {
           }
         })
         .catch((err) => {
+          Alert.alert("Username or Password incorrect!", "Please try again", [
+            { text: "OK", onPress: () => console.log("OK Pressed") },
+          ]);
           console.log(err);
         });
     } catch (err) {

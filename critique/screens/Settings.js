@@ -23,9 +23,6 @@ export default class Settings extends Component {
               "Logout to update swipe stack",
               [{ text: "OK", onPress: () => console.log("OK Pressed") }]
             );
-            //Alert.alert("Ratings successfully reset!", [
-            //  { text: "OK", onPress: () => console.log("OK Pressed") },
-            //]);
           }
         })
         .catch((err) => {
@@ -35,6 +32,29 @@ export default class Settings extends Component {
       console.log(err);
     }
   };
+
+  changePassword(password) {
+    try {
+      axios
+        .post(`https://critique-heroku.herokuapp.com/users/changePassword`, {
+          username: this.state.username,
+          password: password,
+        })
+        .then(async function (res) {
+          if (res) {
+            console.log(res.data);
+            Alert.alert("Password Successfully Changed!", "", [
+              { text: "OK", onPress: () => console.log("OK Pressed") },
+            ]);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   async componentDidUpdate() {
     //console.log(this.state.nav);
@@ -99,8 +119,7 @@ export default class Settings extends Component {
                   },
                   {
                     text: "OK",
-                    onPress: (password) =>
-                      console.log("OK Pressed, password: " + password),
+                    onPress: (password) => this.changePassword(password),
                   },
                 ],
                 "secure-text"
