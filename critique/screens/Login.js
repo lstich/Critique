@@ -64,7 +64,7 @@ function Login({ navigation, action }) {
   let email = "";
   let password = "";
 
-  const handleEmailChange = (value) => {
+  const handleUserChange = (value) => {
     email = value;
   };
 
@@ -166,17 +166,17 @@ function Login({ navigation, action }) {
         ></Image>
       </View>
       <View style={styles.infoBox}>
-        <Text style={styles.text}>Email:</Text>
+        <Text style={styles.text}>Username:</Text>
         <TextInput
           style={styles.textInput}
-          placeholder="Enter your Email"
+          placeholder="Enter your Username"
           ref={(input) => {
             this.userInput = input;
           }}
-          textContentType="emailAddress"
+          textContentType="username"
           returnKeyType="next"
           //onSubmitEditing=
-          onChangeText={(value) => handleEmailChange(value)}
+          onChangeText={(value) => handleUserChange(value)}
         ></TextInput>
       </View>
       <View style={styles.infoBox}>

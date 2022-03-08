@@ -1,6 +1,5 @@
 import { React, Component } from "react";
 import { View, Button, Text, Alert } from "react-native";
-import Colours from "../components/styles.js";
 import axios from "axios";
 
 export default class Settings extends Component {
@@ -57,24 +56,25 @@ export default class Settings extends Component {
   }
 
   async componentDidUpdate() {
-    //console.log(this.state.nav);
     if (this.state.username == null) {
-      if (this.state.nav.navigation.getState().routes.length > 1) {
+      if (this.state.nav.navigation.getParent().getState().routes.length > 1) {
         await this.setState({
-          username: this.state.nav.navigation.getState().routes[1].params.user,
+          username: this.state.nav.navigation.getParent().getState().routes[1]
+            .params.user,
         });
         console.log(this.state.username);
       }
     }
   }
   async componentDidMount() {
+    //console.log("hello " + this.state.username);
     //console.log(this.state.nav.navigation.getState().routes[1].params.user);
     if (this.state.username == null) {
-      if (this.state.nav.navigation.getState().routes.length > 1) {
+      if (this.state.nav.navigation.getParent().getState().routes.length > 1) {
         await this.setState({
-          username: this.state.nav.navigation.getState().routes[1].params.user,
+          username: this.state.nav.navigation.getParent().getState().routes[1]
+            .params.user,
         });
-        console.log(this.state.username);
       }
     }
   }
@@ -84,18 +84,17 @@ export default class Settings extends Component {
       <View
         style={{
           flex: 1,
-
           marginTop: 80,
         }}
       >
         <View
           style={{
             flex: 0.1,
-            alignItems: "Left",
-            justifyContent: "Left",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <Text style={{ fontSize: 24, color: "white" }}>Settings Screen</Text>
+          <Text style={{ fontSize: 24, color: "white" }}>Settings</Text>
         </View>
         <View
           style={{
@@ -108,22 +107,11 @@ export default class Settings extends Component {
           <Button
             title="Change Password"
             onPress={() =>
-              Alert.prompt(
-                "Enter new Password",
-                "",
-                [
-                  {
-                    text: "Cancel",
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel",
-                  },
-                  {
-                    text: "OK",
-                    onPress: (password) => this.changePassword(password),
-                  },
-                ],
-                "secure-text"
-              )
+              this.state.nav.navigation.navigate("Change Password", {
+                params: {
+                  user: this.state.username,
+                },
+              })
             }
           />
           <Button

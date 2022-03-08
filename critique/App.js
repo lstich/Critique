@@ -10,9 +10,7 @@ import Albums from "./screens/Albums.js";
 import Settings from "./screens/Settings.js";
 import Swipe from "./screens/Swipe.js";
 import Login from "./screens/Login.js";
-import Screen from "./screens/screen.js";
-import albumScreen from "./screens/albumScreen.js";
-import settingScreen from "./screens/settingScreen.js";
+import ChangePassword from "./screens/ChangePassword.js";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -63,7 +61,7 @@ export default class App extends React.Component {
   render() {
     return (
       <NavigationContainer theme={DarkTheme}>
-        <Stack.Navigator initialRouteName="Swipe">
+        <Stack.Navigator>
           <Stack.Screen
             name="Login"
             component={Login}
@@ -112,7 +110,7 @@ function AppTabs() {
       />
       <Tab.Screen
         name="Settings"
-        component={Settings}
+        component={SettingsStack}
         options={{
           tabBarLabel: "Settings",
           tabBarIcon: ({ color }) => (
@@ -121,6 +119,25 @@ function AppTabs() {
         }}
       />
     </Tab.Navigator>
+  );
+}
+
+function SettingsStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="SettingsScreen"
+        component={Settings}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Change Password"
+        component={ChangePassword}
+        options={{}}
+      />
+    </Stack.Navigator>
   );
 }
 

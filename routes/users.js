@@ -18,12 +18,6 @@ router.post("/login", async function (req, res, next) {
   if (existingUser) {
     bcrypt.compare(password, existingUser.password, function (err, result) {
       console.log(result);
-      console.log("input p " + password);
-      console.log("DB " + existingUser.password);
-
-      bcrypt.hash(password, saltRounds, function (err, hash) {
-        console.log("hashed p " + hash);
-      });
       if (result == true) {
         res.send("Logged in");
         // The Password is Correct!
@@ -75,35 +69,42 @@ router.post("/register", async function (req, res, next) {
 });
 
 router.post("/changePassword", async function (req, res, next) {
-  let { username, password } = req.body;
-  let p = "password";
+  let { username, oldPassword, newPassword } = req.body;
 
   let existingUser = await User.findOne({ username: username });
   if (!existingUser) return res.status(400).send("User doesnt exist!");
 
-  try {
-    bcrypt.hash(password, saltRounds, function (err, hash) {
-      // Store hash in your password DB.
-      console.log(hash);
+  bcrypt.compare(oldPassword, existingUser.password, function (err, result) {
+    console.log(result);
+    if (result == true) {
+      try {
+        bcrypt.hash(newPassword, saltRounds, function (err, hash) {
+          // Store hash in your password DB.
+          console.log(hash);
 
-      //create and add new user
-
-      existingUser.password = hash;
-      existingUser.save().then(
-        (user) => {
-          res.send("Password Successfully Changed! " + user);
-        },
-        (err) => {
-          res.status(400).send(err);
-        }
-      ),
-        (err) => {
-          res.status(400).send(err);
-        };
-    });
-  } catch (err) {
-    console.log(err);
-  }
+          //create and add new user
+          existingUser.password = hash;
+          existingUser.save().then(
+            (user) => {
+              res.send("Password Successfully Changed! " + user);
+            },
+            (err) => {
+              res.status(400).send(err);
+            }
+          ),
+            (err) => {
+              res.status(400).send(err);
+            };
+        });
+      } catch (err) {
+        console.log(err);
+      }
+      // The Password is Correct!
+    } else {
+      res.status(400).send("Old password incorrect!");
+      // Your password is not correct.
+    }
+  });
 });
 
 module.exports = router;
