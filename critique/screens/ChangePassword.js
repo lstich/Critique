@@ -46,11 +46,15 @@ export default class ChangePassword extends Component {
   };
 
   changePassword() {
+    console.log(this.state.oldPass);
+    console.log(this.state.newPass);
+
     try {
       axios
         .post(`https://critique-heroku.herokuapp.com/users/changePassword`, {
           username: this.state.username,
-          password: this.state.newPass,
+          oldPassword: this.state.oldPass,
+          newPassword: this.state.newPass,
         })
         .then(async function (res) {
           if (res) {
@@ -61,6 +65,9 @@ export default class ChangePassword extends Component {
           }
         })
         .catch((err) => {
+          Alert.alert("Password Change Unsucessful!", "", [
+            { text: "OK", onPress: () => console.log("OK Pressed") },
+          ]);
           console.log(err);
         });
     } catch (err) {
