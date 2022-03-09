@@ -99,7 +99,9 @@ export default class Swipe extends Component {
           />
         ) : (
           <>
-            {this.state.allCardsSwiped ? (
+            {this.state.allCardsSwiped ||
+            this.state.index >= this.state.albums.length ||
+            this.state.albums.length < 1 ? (
               <View style={styles.flexstyle}>
                 <Text style={styles.text}>All albums rated!</Text>
               </View>
