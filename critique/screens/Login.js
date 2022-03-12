@@ -139,6 +139,9 @@ function Login({ navigation, action }) {
           }
         })
         .catch((err) => {
+          Alert.alert("Username already taken!", "Please try again", [
+            { text: "OK", onPress: () => console.log("OK Pressed") },
+          ]);
           console.log(err);
         });
     } catch (err) {
@@ -175,7 +178,10 @@ function Login({ navigation, action }) {
           }}
           textContentType="username"
           returnKeyType="next"
-          //onSubmitEditing=
+          onSubmitEditing={() => {
+            this.passwordInput.focus();
+          }}
+          blurOnSubmit={false}
           onChangeText={(value) => handleUserChange(value)}
         ></TextInput>
       </View>

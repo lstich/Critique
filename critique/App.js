@@ -4,7 +4,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { WebView } from "react-native-webview";
 
 import Albums from "./screens/Albums.js";
 import Settings from "./screens/Settings.js";
@@ -20,42 +20,18 @@ LogBox.ignoreAllLogs();
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.setActiveUser = this.setActiveUser.bind(this);
     this.state = {
       userLoggedIn: null,
     };
   }
 
-  async setActiveUser() {
-    try {
-      let user = "me";
-      //this.setState({ userLoggedIn: user });
-      //console.log("yeet " + this.state.userLoggedIn);
-      console.log(user);
-
-      await AsyncStorage.setItem("activeUser", user);
-      this.setState({ userLoggedIn: user });
-    } catch (e) {
-      // error reading value
-    }
-  }
-
   async componentDidUpdate() {
     console.log("update");
-
-    if ((await AsyncStorage.getItem("activeUser")) != null) {
-      this.setState({ userLoggedIn: await AsyncStorage.getItem("activeUser") });
-      console.log("you made it" + (await AsyncStorage.getItem("activeUser")));
-    }
   }
 
-  async componentWillUnmount() {
-    AsyncStorage.clear();
-  }
+  async componentWillUnmount() {}
   async componentDidMount() {
     //this.setActiveUser();
-    let value = await AsyncStorage.getItem("activeUser");
-    console.log("mmmmm k " + value);
   }
 
   render() {
