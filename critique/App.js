@@ -25,14 +25,9 @@ export default class App extends React.Component {
     };
   }
 
-  async componentDidUpdate() {
-    console.log("update");
-  }
-
+  async componentDidUpdate() {}
   async componentWillUnmount() {}
-  async componentDidMount() {
-    //this.setActiveUser();
-  }
+  async componentDidMount() {}
 
   render() {
     return (
@@ -41,13 +36,9 @@ export default class App extends React.Component {
           <Stack.Screen
             name="Login"
             component={Login}
-            //children={() => <Login action={this.setActiveUser} />}
             options={{
               headerShown: false,
               tabBarLabel: "Login",
-              tabBarIcon: ({ color }) => (
-                <MaterialIcons name="star" color={color} size={26} />
-              ),
             }}
           />
           <Stack.Screen

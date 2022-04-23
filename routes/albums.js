@@ -16,6 +16,7 @@ router.get("/getAlbums", function (req, res, next) {
   );
 });
 
+//get albums not rated by user
 router.post("/getNewAlbums", function (req, res, next) {
   let { username } = req.body;
   Album.find({ "userRatings.userId": { $ne: username } }).then(
@@ -28,6 +29,7 @@ router.post("/getNewAlbums", function (req, res, next) {
   );
 });
 
+//add rating for the given album from the given user
 router.post("/userRateAlbum", async function (req, res, next) {
   let { username, albumId, userRating } = req.body;
   try {
@@ -90,6 +92,7 @@ router.post("/userRateAlbum", async function (req, res, next) {
   }
 });
 
+//remove all ratings from gioven user
 router.post("/resetUserRatings", async function (req, res, next) {
   let { username } = req.body;
   let test = "";
@@ -136,8 +139,6 @@ router.post("/resetUserRatings", async function (req, res, next) {
             res.status(400).send(err);
           };
       }
-      //res.send("Database already up to date");
-      //res.send("Things went well! " + flag + " " + username + " " + test + " " + albums);
       res.send("Things went well! ");
     } else {
       res.send("user doesnt exist");
@@ -147,6 +148,7 @@ router.post("/resetUserRatings", async function (req, res, next) {
   }
 });
 
+//add album to the database if not already in the db
 router.post("/addAlbum", function (req, res, next) {
   let newAlbum = new Album({
     albumId: "4",

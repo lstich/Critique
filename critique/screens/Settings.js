@@ -1,5 +1,5 @@
 import { React, Component } from "react";
-import { View, Button, Text, Alert } from "react-native";
+import { View, Button, Text, Alert, StyleSheet } from "react-native";
 import axios from "axios";
 
 export default class Settings extends Component {
@@ -32,29 +32,6 @@ export default class Settings extends Component {
     }
   };
 
-  changePassword(password) {
-    try {
-      axios
-        .post(`https://critique-heroku.herokuapp.com/users/changePassword`, {
-          username: this.state.username,
-          password: password,
-        })
-        .then(async function (res) {
-          if (res) {
-            console.log(res.data);
-            Alert.alert("Password Successfully Changed!", "", [
-              { text: "OK", onPress: () => console.log("OK Pressed") },
-            ]);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   async componentDidUpdate() {
     if (this.state.username == null) {
       if (this.state.nav.navigation.getParent().getState().routes.length > 1) {
@@ -67,8 +44,6 @@ export default class Settings extends Component {
     }
   }
   async componentDidMount() {
-    //console.log("hello " + this.state.username);
-    //console.log(this.state.nav.navigation.getState().routes[1].params.user);
     if (this.state.username == null) {
       if (this.state.nav.navigation.getParent().getState().routes.length > 1) {
         await this.setState({
@@ -81,28 +56,11 @@ export default class Settings extends Component {
 
   render() {
     return (
-      <View
-        style={{
-          flex: 1,
-          marginTop: 80,
-        }}
-      >
-        <View
-          style={{
-            flex: 0.1,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text style={{ fontSize: 24, color: "white" }}>Settings</Text>
+      <View style={styles.container}>
+        <View style={styles.main}>
+          <Text style={styles.heading}>Settings</Text>
         </View>
-        <View
-          style={{
-            flex: 0.9,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <View style={styles.body}>
           <Button title="Reset Ratings" onPress={() => this.resetRatings()} />
           <Button
             title="Change Password"
@@ -123,3 +81,24 @@ export default class Settings extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 80,
+  },
+  main: {
+    flex: 0.1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  heading: {
+    fontSize: 24,
+    color: "white",
+  },
+  body: {
+    flex: 0.9,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

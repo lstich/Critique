@@ -47,7 +47,6 @@ export default class Swipe extends Component {
 
   fetchAlbums() {
     try {
-      console.log(this.state.username == "q");
       axios
         .post(`https://critique-heroku.herokuapp.com/albums/getNewAlbums`, {
           username: this.state.username,
@@ -81,7 +80,6 @@ export default class Swipe extends Component {
             //console.log(res);
           }
         });
-      //console.log(Object.values(this.state.albums));
     } catch (err) {
       console.log(err);
     }
@@ -199,54 +197,21 @@ export default class Swipe extends Component {
                     ></Swiper>
                   </View>
                 ) : (
-                  <View
-                    style={{
-                      flex: 1,
-                      paddingTop: 100,
-                      alignItems: "center",
-                    }}
-                  >
+                  <View style={styles.viewStyle}>
                     <Image
-                      style={{
-                        aspectRatio: 1,
-                        flex: 0.1,
-                        borderRadius: 100,
-                        borderWidth: 100,
-                      }}
+                      style={styles.imageAndroid}
                       source={{
                         uri: this.state.albums[this.state.index].cover,
                       }}
                     />
-                    <View
-                      style={{
-                        flex: 0.5,
-                        alignItems: "center",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          flex: 1,
-                          fontSize: 24,
-                          color: "white",
-                        }}
-                      >
+                    <View style={styles.androidView}>
+                      <Text style={styles.androidText}>
                         {this.state.albums[this.state.index].title}
                       </Text>
-                      <Text
-                        style={{
-                          fontSize: 24,
-                          flex: 0.5,
-                          color: "#D5DC00",
-                        }}
-                      >
+                      <Text style={styles.androidSecondaryText}>
                         {this.state.albums[this.state.index].artist}
                       </Text>
-                      <View
-                        style={{
-                          alignItems: "center",
-                          flexDirection: "row",
-                        }}
-                      >
+                      <View style={styles.androidTextView}>
                         <View style={{ marginTop: 5, marginHorizontal: 30 }}>
                           <Button
                             color="red"
@@ -302,6 +267,24 @@ export default class Swipe extends Component {
 }
 
 const styles = StyleSheet.create({
+  androidView: {
+    flex: 0.5,
+    alignItems: "center",
+  },
+  androidText: {
+    flex: 1,
+    fontSize: 24,
+    color: "white",
+  },
+  androidSecondaryText: {
+    fontSize: 24,
+    flex: 0.5,
+    color: "#D5DC00",
+  },
+  androidTextView: {
+    alignItems: "center",
+    flexDirection: "row",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -355,5 +338,16 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "blue",
     backgroundColor: "#222222",
+  },
+  imageAndroid: {
+    aspectRatio: 1,
+    flex: 0.1,
+    borderRadius: 100,
+    borderWidth: 100,
+  },
+  viewStyle: {
+    flex: 1,
+    paddingTop: 100,
+    alignItems: "center",
   },
 });

@@ -81,7 +81,7 @@ export default class AlbumListCard extends Component {
           <Text
             style={{
               flex: 0.6,
-              fontSize: 20,
+              fontSize: 18,
               paddingLeft: 10,
               paddingRight: 5,
               fontWeight: "700",

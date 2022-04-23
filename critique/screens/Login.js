@@ -13,53 +13,6 @@ import axios from "axios";
 
 //import { withNavigation } from "react-navigation";
 
-const styles = StyleSheet.create({
-  buttons: {
-    flex: 0.2,
-  },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    textAlign: "center",
-  },
-  logoHeader: {
-    justifyContent: "flex-start",
-    alignItems: "center",
-    flex: 0.35,
-  },
-  text: {
-    color: "white",
-    fontFamily: "Arial",
-    paddingBottom: 5,
-    marginHorizontal: 5,
-  },
-  textInput: {
-    color: "black",
-    fontFamily: "Arial",
-    padding: 10,
-    marginHorizontal: 5,
-    borderColor: "gray",
-    backgroundColor: "white",
-    borderWidth: 1,
-  },
-  infoBox: {
-    flexDirection: "column",
-    backgroundColor: "#222222",
-    margin: 3,
-    paddingTop: 15,
-    paddingBottom: 15,
-    paddingLeft: 5,
-    borderRadius: 10,
-    borderWidth: 2,
-    marginHorizontal: 15,
-  },
-  spinner: {
-    flex: 1,
-    justifyContent: "center",
-    textAlign: "center",
-  },
-});
-
 function Login({ navigation, action }) {
   let email = "";
   let password = "";
@@ -221,3 +174,50 @@ function Login({ navigation, action }) {
   );
 }
 export default Login;
+
+const styles = StyleSheet.create({
+  buttons: {
+    flex: 0.2,
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    textAlign: "center",
+  },
+  logoHeader: {
+    justifyContent: "flex-start",
+    alignItems: "center",
+    flex: 0.35,
+  },
+  text: {
+    color: "white",
+    fontFamily: "Arial",
+    paddingBottom: 5,
+    marginHorizontal: 5,
+  },
+  textInput: {
+    color: "black",
+    fontFamily: "Arial",
+    padding: 10,
+    marginHorizontal: 5,
+    borderColor: "gray",
+    backgroundColor: "white",
+    borderWidth: 1,
+  },
+  infoBox: {
+    flexDirection: "column",
+    backgroundColor: "#222222",
+    margin: 3,
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 5,
+    borderRadius: 10,
+    borderWidth: 2,
+    marginHorizontal: 15,
+  },
+  spinner: {
+    flex: 1,
+    justifyContent: "center",
+    textAlign: "center",
+  },
+});

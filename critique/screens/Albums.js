@@ -10,18 +10,6 @@ import axios from "axios";
 
 import AlbumListCard from "./../components/album-list-card";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-
-  spinner: {
-    flex: 1,
-    justifyContent: "center",
-    textAlign: "center",
-  },
-});
-
 export default class Albums extends Component {
   constructor(props) {
     super(props);
@@ -83,3 +71,15 @@ export default class Albums extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+
+  spinner: {
+    flex: 1,
+    justifyContent: "center",
+    textAlign: "center",
+  },
+});

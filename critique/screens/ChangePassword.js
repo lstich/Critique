@@ -2,35 +2,6 @@ import { React, Component } from "react";
 import { View, Button, Text, TextInput, StyleSheet, Alert } from "react-native";
 import axios from "axios";
 
-const styles = StyleSheet.create({
-  text: {
-    color: "white",
-    fontFamily: "Arial",
-    paddingBottom: 5,
-    marginHorizontal: 5,
-  },
-  textInput: {
-    color: "black",
-    fontFamily: "Arial",
-    padding: 10,
-    marginHorizontal: 5,
-    borderColor: "gray",
-    backgroundColor: "white",
-    borderWidth: 1,
-  },
-  infoBox: {
-    flexDirection: "column",
-    backgroundColor: "#222222",
-    margin: 3,
-    paddingTop: 15,
-    paddingBottom: 15,
-    paddingLeft: 5,
-    borderRadius: 10,
-    borderWidth: 2,
-    marginHorizontal: 15,
-  },
-});
-
 export default class ChangePassword extends Component {
   constructor(props) {
     super(props);
@@ -91,12 +62,7 @@ export default class ChangePassword extends Component {
 
   render() {
     return (
-      <View
-        style={{
-          flex: 1,
-          marginTop: 80,
-        }}
-      >
+      <View style={styles.container}>
         <View style={styles.infoBox}>
           <Text style={styles.text}>Old Password:</Text>
           <TextInput
@@ -137,3 +103,36 @@ export default class ChangePassword extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 80,
+  },
+  text: {
+    color: "white",
+    fontFamily: "Arial",
+    paddingBottom: 5,
+    marginHorizontal: 5,
+  },
+  textInput: {
+    color: "black",
+    fontFamily: "Arial",
+    padding: 10,
+    marginHorizontal: 5,
+    borderColor: "gray",
+    backgroundColor: "white",
+    borderWidth: 1,
+  },
+  infoBox: {
+    flexDirection: "column",
+    backgroundColor: "#222222",
+    margin: 3,
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 5,
+    borderRadius: 10,
+    borderWidth: 2,
+    marginHorizontal: 15,
+  },
+});
