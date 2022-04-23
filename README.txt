@@ -4,6 +4,8 @@ Honours Project Winter 2022
 Carleton University
 Lou Nel
 
+Code can be downloaded from GitHub repo https://github.com/lstich/Critique
+
 MongoDB is accessed by URI: mongodb+srv://lstich:
 mongo@cluster-critique.v6p6g.mongodb.net/Critique
 
